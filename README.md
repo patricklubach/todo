@@ -4,8 +4,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 
 ## Features
 
-- title
-- description
+- title / description
 - description format editor
 - links in separate section
 - deadline with date selector
@@ -20,15 +19,22 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - CLI tool for managing todos from terminal
 - Mutliple todo lists
 
+## Usage
+
+To use the todo app, run:
+
+```bash
+node index.js
+```
+
 ## Todo
 
-- [ ] title
-- [ ] description
+- [x] display todos
 - [ ] Add new todo
-- [ ] Mark todo as done
 - [ ] Delete todo
-- [ ] Strike through todo when done
 - [ ] store todos in backend (e.g. sqlite)
+- [ ] Mark todo as done
+- [ ] Strike through todo when done
 - [ ] description format editor
 - [ ] Add sidepanel for multiple todo lists
 - [ ] links in separate section
