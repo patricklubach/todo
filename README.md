@@ -19,6 +19,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - Archive for archived and/or finished or deleted todos
 - CLI tool for managing todos from terminal
 - Mutliple todo lists
+- CLI support
 
 ## Usage
 
@@ -47,3 +48,4 @@ node index.js
 - [ ] dictate function
 - [ ] tags
 - [ ] alerts based on deadline and/or time range from now to deadline (e.g. through telegram or http hook)
+- [ ] add CLI support
