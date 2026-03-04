@@ -29,5 +29,5 @@ const server = http.createServer((req, res) => {
     res.end(data);
   });
 });
-console.log("Run server on port 3000");
+console.log("Run server: http://localhost:3000");
 server.listen(3000);

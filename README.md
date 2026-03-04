@@ -30,11 +30,11 @@ node index.js
 ## Todo
 
 - [x] display todos
-- [ ] Add new todo
-- [ ] Delete todo
+- [x] Add new todo
+- [x] Delete todo
+- [x] make todos persistent
 - [ ] store todos in backend (e.g. sqlite)
-- [ ] Mark todo as done
-- [ ] Strike through todo when done
+- [ ] Mark todo as done / Strike through todo when done
 - [ ] description format editor
 - [ ] Add sidepanel for multiple todo lists
 - [ ] links in separate section
