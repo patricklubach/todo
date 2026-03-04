@@ -6,6 +6,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 
 - title / description
 - duplicate task
+- edit task
 - description format editor
 - links in separate section
 - deadline with date selector
@@ -20,6 +21,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - CLI tool for managing todos from terminal
 - Mutliple todo lists
 - CLI support
+- searchable tasks
 
 ## Usage
 
@@ -36,10 +38,12 @@ node index.js
 - [x] Delete todo
 - [x] make todos persistent
 - [ ] store todos in backend (e.g. sqlite)
-- [ ] duplcate task
+- [ ] add possibility to duplicate task
+- [ ] make tasks editable
 - [ ] Mark todo as done / Strike through todo when done
 - [ ] description format editor
 - [ ] Add sidepanel for multiple todo lists
+- [ ] Add possibility to create multiple todo lists
 - [ ] links in separate section
 - [ ] deadline with date selector
 - [ ] deadline progress bar
