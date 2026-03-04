@@ -5,6 +5,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 ## Features
 
 - title / description
+- duplicate task
 - description format editor
 - links in separate section
 - deadline with date selector
@@ -34,6 +35,7 @@ node index.js
 - [x] Delete todo
 - [x] make todos persistent
 - [ ] store todos in backend (e.g. sqlite)
+- [ ] duplcate task
 - [ ] Mark todo as done / Strike through todo when done
 - [ ] description format editor
 - [ ] Add sidepanel for multiple todo lists
