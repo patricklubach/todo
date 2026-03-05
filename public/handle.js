@@ -16,7 +16,7 @@ function displayTasks() {
     html += `<div class="task" id="${task.id}">
           <h3>${task.title}</h3>
           <p>${task.description}</p>
-          <button class="done-button" onclick="removeTask('${task.id}') ">Done</button>
+          <button class="done-button" onclick="toggle('${task.id}') ">Done</button>
           <button class="delete-button" onclick="removeTask('${task.id}')">Delete</button>
       </div>`;
   }
@@ -70,6 +70,15 @@ titleInput.addEventListener("keydown", (e) => {
     addTask();
   }
 });
+
+function toggle(id) {
+  const task = document.getElementById(id);
+  const title = task.querySelector("h3");
+  const description = task.querySelector("p");
+
+  title.classList.toggle("done");
+  description.classList.toggle("done");
+}
 
 loadTasks();
 displayTasks();

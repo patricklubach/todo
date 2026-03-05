@@ -31,6 +31,8 @@ To use the todo app, run:
 node index.js
 ```
 
+or open the `public` directory using the live server extension in vscode.
+
 ## Todo
 
 - [x] display todos
@@ -40,7 +42,7 @@ node index.js
 - [ ] store todos in backend (e.g. sqlite)
 - [ ] add possibility to duplicate task
 - [ ] make tasks editable
-- [ ] Mark todo as done / Strike through todo when done
+- [x] Mark todo as done / Strike through todo when done
 - [ ] description format editor
 - [ ] Add sidepanel for multiple todo lists
 - [ ] Add possibility to create multiple todo lists
