@@ -22,6 +22,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - Mutliple todo lists
 - CLI support
 - searchable tasks
+- meta information (task counter, created_at, updated_at, etc) 
 
 ## Usage
 
@@ -54,4 +55,6 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] dictate function
 - [ ] tags
 - [ ] alerts based on deadline and/or time range from now to deadline (e.g. through telegram or http hook)
+- [ ] add meta information to tasks (created_at, updated_at, total) 
+- [ ] make meta information visible
 - [ ] add CLI support
