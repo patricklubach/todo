@@ -1,3 +1,11 @@
+class Task {
+  constructor(title, description = "") {
+    this.id = crypto.randomUUID().slice(0, 8);
+    this.title = title;
+    this.description = description;
+  }
+}
+
 function showError(err) {
   const errorBox = document.getElementById("error");
 
@@ -7,65 +15,85 @@ function showError(err) {
   console.error(err);
 }
 
-let tasks = new Map();
-
-function saveTasks() {
+function saveTask(task) {
   try {
-    console.log("Updating tasks");
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    console.log("Tasks list updated");
+    console.log(`Saving task (id: ${task.id})`);
+    localStorage.setItem(task.id, JSON.stringify(task));
   } catch (error) {
     showError(error);
   }
+  console.log(`Task saved sucessfully (id: ${task.id})`);
 }
 
-function loadTasks() {
-  console.log("Loading tasks");
-  let saved = localStorage.getItem("tasks");
-  if (saved !== null) {
-    tasks = saved;
+function loadTask(id) {
+  console.log("Retrieving task");
+  return JSON.parse(localStorage.getItem(id));
+}
+
+function createTaskElement(id, title, description = undefined) {
+  console.log(`Create task, id: ${id}, title: ${title}, desc: ${description}`);
+  const taskElement = document.createElement("div");
+  taskElement.id = id;
+  taskElement.classList.add("task");
+
+  const titleElement = document.createElement("h3");
+  titleElement.id = `${id}-title`;
+  titleElement.textContent = title;
+  taskElement.appendChild(titleElement);
+
+  if (description) {
+    const descriptionElement = document.createElement("p");
+    descriptionElement.id = `${id}-description`;
+    descriptionElement.textContent = description;
+    taskElement.appendChild(descriptionElement);
   }
+
+  const btnWrapperElement = document.createElement("div");
+  btnWrapperElement.id = "btn-wrapper";
+  taskElement.appendChild(btnWrapperElement)
+
+  const doneButton = document.createElement("button");
+  doneButton.classList.add("done-button");
+  doneButton.addEventListener('click', (id) => toggle(id))
+  doneButton.textContent = "Done";
+  btnWrapperElement.appendChild(doneButton);
+
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("delete-button");
+  doneButton.addEventListener('click', (id) => removeButton(id))
+  removeButton.textContent = "Remove";
+  btnWrapperElement.appendChild(removeButton);
+
+  const editButton = document.createElement("button");
+  editButton.classList.add("edit-button");
+  doneButton.addEventListener('click', (id) => editButton(id))
+  editButton.textContent = "Edit";
+  btnWrapperElement.appendChild(editButton);
+
+  return taskElement;
 }
 
 function displayTasks() {
   console.log("Displaying tasks");
-  let html = "";
-  tasks.forEach(function (task, id) {
-    html += createTaskElement(task.id, task.title, task.description);
-  });
-  document.getElementById("tasks").innerHTML = html;
-}
-
-class Task {
-  constructor(title, description = "") {
-    this.id = crypto.randomUUID().slice(0, 8);
-    this.title = title;
-    this.description = description;
+  const tasks = document.getElementById("tasks");
+  for (let i = 0; i < localStorage.length; i++) {
+    let id = localStorage.key(i);
+    let task = loadTask(id);
+    let taskElement = createTaskElement(task.id, task.title, task.description);
+    tasks.appendChild(taskElement);
   }
-}
-
-function createTaskElement(id, title, description) {
-  console.log(`Create task, id: ${id}, title: ${title}, desc: ${description}`);
-  const descriptionElement =
-    description != "" ? `<p id="${id}-description">${description}</p>` : "";
-  return `<div class="task" id="${id}">
-    <h3 id="${id}-title">${title}</h3>
-    ${descriptionElement}
-    <button class="done-button" onclick="toggle('${id}') ">Done</button>
-    <button class="delete-button" onclick="removeTask('${id}')">Delete</button>
-    <button class="edit-button" onclick="editTask('${id}') ">Edit</button>
-  </div>`;
 }
 
 function createTask() {
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
-  console.log(`Adding task: "${title}"`);
+  console.log(`Adding task (title: "${title}")`);
   const task = new Task(title, description);
-  console.log(typeof tasks);
-  tasks.set(task.id, task);
+  console.log(
+    `Creating task (id: ${task.id}, title: ${task.title}, desc: ${task.description})`,
+  );
+  saveTask(task);
 
-  saveTasks();
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   displayTasks();
@@ -73,14 +101,13 @@ function createTask() {
 
 function removeTask(id) {
   console.log(`Removing task "${id}"`);
-  tasks.delete(id);
-  saveTasks();
+  localStorage.removeItem(id);
   displayTasks();
 }
 
 function editTask(id) {
   console.log(`Editing task "${id}"`);
-  const task = tasks.get(id);
+  const task = loadTask(id);
 
   let taskElement = document.getElementById(id);
 
@@ -98,17 +125,6 @@ function editTask(id) {
         value="${task.description}"
     />
     <button class="save-button" onclick="saveTask('${id}') ">Save</button>`;
-}
-
-function saveTask(id) {
-  console.log("Save tasks");
-
-  const task = tasks.get(id);
-  task.title = document.getElementById(`${id}-title`).value;
-  task.description = document.getElementById(`${id}-description`).value;
-
-  saveTasks();
-  displayTasks();
 }
 
 const titleInput = document.getElementById("title");
@@ -133,14 +149,18 @@ function toggle(id) {
 function init() {
   localStorage.clear();
   const task = new Task("foobar", "my cool desc");
-  tasks.set(task.id, task);
-  saveTasks();
+  saveTask(task);
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+
+    console.log(key, value);
+  }
 }
 
 try {
   init();
-  loadTasks();
-  if (tasks.size > 0) {
+  if (localStorage.length > 0) {
     displayTasks();
   }
 } catch (err) {
