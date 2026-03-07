@@ -8,25 +8,27 @@
 
     <body>
         <h1>Task List</h1>
-
-        <div class="task" id="wrapper">
-            <input
-                id="title"
-                type="text"
-                required
-                placeholder="Enter your title"
-            />
-            <input
-                id="description"
-                type="text"
-                placeholder="Enter your description"
-            />
-            <button class="add-button done-button" onclick="addTask()">
-                Add
-            </button>
-            </form>
+        <div id="wrapper">
+            <div class="task" id="add-task">
+                <input
+                    id="title"
+                    type="text"
+                    required
+                    placeholder="Enter your title"
+                />
+                <input
+                    id="description"
+                    type="text"
+                    placeholder="Enter your description"
+                />
+                <button class="add-button done-button" onclick="createTask()">
+                    Add
+                </button>
+            </div>
         </div>
         <div id="tasks"></div>
+        <div id="error" style="display: none; color: red"></div>
     </body>
+
     <script src="handle.js"></script>
 </html>
