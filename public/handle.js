@@ -1,11 +1,21 @@
 let tasks = [];
 
 class Task {
-  constructor(title, description = "") {
+  constructor(title, description = undefined) {
     this.id = crypto.randomUUID();
     this.title = title;
     this.description = description;
   }
+}
+
+function createTaskElement(id, title, description = "") {
+  const descriptionElement = description != "" ? `<p>${description}</p>` : "";
+  return `<div class="task" id="${id}">
+    ${descriptionElement}
+    <h3>${title}</h3>
+    <button class="done-button" onclick="toggle('${id}') ">Done</button>
+    <button class="delete-button" onclick="removeTask('${id}')">Delete</button>
+    </div>`;
 }
 
 function displayTasks() {
@@ -13,12 +23,7 @@ function displayTasks() {
   let html = "";
   for (let i = 0; i < tasks.length; i++) {
     let task = tasks[i];
-    html += `<div class="task" id="${task.id}">
-          <h3>${task.title}</h3>
-          <p>${task.description}</p>
-          <button class="done-button" onclick="toggle('${task.id}') ">Done</button>
-          <button class="delete-button" onclick="removeTask('${task.id}')">Delete</button>
-      </div>`;
+    html += createTaskElement(task.id, task.title, title.description);
   }
   document.getElementById("tasks").innerHTML = html;
 }
@@ -77,7 +82,9 @@ function toggle(id) {
   const description = task.querySelector("p");
 
   title.classList.toggle("done");
-  description.classList.toggle("done");
+  if (task.description) {
+    description.classList.toggle("done");
+  }
 }
 
 loadTasks();
