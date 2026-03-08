@@ -10,17 +10,19 @@
         <h1>Task List</h1>
         <div id="wrapper">
             <div class="task" id="add-task">
+                <label for="add-descripton">Enter your title:</label>
                 <input
                     id="title"
                     type="text"
                     required
-                    placeholder="Enter your title"
                 />
-                <input
-                    id="description"
-                    type="text"
-                    placeholder="Enter your description"
-                />
+                <label for="add-descripton">Enter your description:</label>
+                <div class="editor">
+                    <div id="description" contenteditable="true"></div>
+                    <button class="done-button" onclick="format('bold')">Bold</button>
+                    <button class="done-button" onclick="format('underline')">Underline</button>
+                    <button class="done-button" onclick="format('italic')">Italic</button>
+                </div>
                 <button class="add-button done-button" onclick="createTask()">
                     Add
                 </button>

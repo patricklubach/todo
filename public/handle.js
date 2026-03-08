@@ -60,13 +60,13 @@ function createTaskElement(id, title, description = undefined) {
 
   const removeButton = document.createElement("button");
   removeButton.classList.add("delete-button");
-  doneButton.addEventListener('click', (id) => removeButton(id))
+  removeButton.addEventListener('click', (id) => removeTask(id))
   removeButton.textContent = "Remove";
   btnWrapperElement.appendChild(removeButton);
 
   const editButton = document.createElement("button");
   editButton.classList.add("edit-button");
-  doneButton.addEventListener('click', (id) => editButton(id))
+  editButton.addEventListener('click', (id) => editButton(id))
   editButton.textContent = "Edit";
   btnWrapperElement.appendChild(editButton);
 
@@ -101,6 +101,7 @@ function createTask() {
 
 function removeTask(id) {
   console.log(`Removing task "${id}"`);
+  console.log(JSON.stringify(id))
   localStorage.removeItem(id);
   displayTasks();
 }
@@ -137,13 +138,17 @@ titleInput.addEventListener("keydown", (e) => {
 
 function toggle(id) {
   const task = document.getElementById(id);
-  const title = task.querySelector("h3");
-  const description = task.querySelector("p");
+  const title = document.getElementById(`${id}-title`);
+  const description = document.getElementById(`${id}-description`);
 
   title.classList.toggle("done");
   if (task.description) {
     description.classList.toggle("done");
   }
+}
+
+function format(cmd) {
+  document.execCommand(cmd);
 }
 
 function init() {
