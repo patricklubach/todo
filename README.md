@@ -40,8 +40,8 @@ or open the `public` directory using the live server extension in vscode.
 
 - [x] display todos sorted by createdAt
 - [x] Add new todo
-  - [x] Add todo: quick mode
-  - [x] Add todo: advanced mode with modal box
+  - [ ] Add todo: quick mode
+  - [ ] Add todo: advanced mode with modal box
 - [x] Delete todo
 - [x] make todos persistent (e.g. through localStorage)
 - [ ] store todos in backend (e.g. sqlite)
