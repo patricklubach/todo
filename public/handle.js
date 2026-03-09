@@ -75,12 +75,17 @@ class Tasks {
 
   static display() {
     console.log("Displaying tasks");
+    const tasksList = [];
     const tasksElement = document.getElementById("tasks");
     let tasks = document.createElement("div");
     tasks.id = "tasks";
     for (let i = 0; i < localStorage.length; i++) {
       let id = localStorage.key(i);
       let task = this.load(id);
+      tasksList.push(task);
+    }
+    tasksList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    for (let task of tasksList) {
       let taskElement = task.getHTMLElement();
       tasks.appendChild(taskElement);
     }
