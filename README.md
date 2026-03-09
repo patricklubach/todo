@@ -8,6 +8,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - edit task
 - Task text formatting
 - store todos in different backends (e.g. sqlite, json file, etc.)
+- task markdown support
 - links in separate section
 - deadline with date selector
 - deadline progress bar
@@ -39,6 +40,8 @@ or open the `public` directory using the live server extension in vscode.
 
 - [x] display todos sorted by createdAt
 - [x] Add new todo
+  - [x] Add todo: quick mode
+  - [x] Add todo: advanced mode with modal box
 - [x] Delete todo
 - [x] make todos persistent (e.g. through localStorage)
 - [ ] store todos in backend (e.g. sqlite)
