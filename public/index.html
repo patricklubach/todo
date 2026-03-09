@@ -10,20 +10,16 @@
         <h1>Task List</h1>
         <div id="wrapper">
             <div class="task" id="add-task">
-                <label for="add-descripton">Enter your title:</label>
-                <input
-                    id="title"
-                    type="text"
-                    required
-                />
-                <label for="add-descripton">Enter your description:</label>
+                <label for="add-todo">Enter your task:</label>
                 <div class="editor">
                     <div id="description" contenteditable="true"></div>
-                    <button class="done-button" onclick="format('bold')">Bold</button>
-                    <button class="done-button" onclick="format('underline')">Underline</button>
-                    <button class="done-button" onclick="format('italic')">Italic</button>
+                    <!-- <div id="format-buttons">
+                        <button class="done-button" onclick="format('bold')">Bold</button>
+                        <button class="done-button" onclick="format('underline')">Underline</button>
+                        <button class="done-button" onclick="format('italic')">Italic</button>
+                    </div> -->
                 </div>
-                <button class="add-button done-button" onclick="createTask()">
+                <button class="add-button done-button" onclick="Tasks.add()">
                     Add
                 </button>
             </div>
