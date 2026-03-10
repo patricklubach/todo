@@ -10,7 +10,6 @@
 
 body {
     font-family: sans-serif;
-    /* background-image: url("img/background3.jpg"); */
     background-color: whitesmoke;
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -18,12 +17,44 @@ body {
     background-attachment: fixed;
 }
 
-h1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: whitesmoke;
+/* ---------- TOPNAV ---------- */
+.topnav {
+  background-color: #202020;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center;     /* Vertical centering */
+  height: 4em;             /* Requires height for vertical centering */
+  width: 100%;
 }
+
+.topnav input[type=text] {
+  border: none;
+  font-size: 1em;
+  width: 32em;
+  padding: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a, .topnav input[type=text] {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;
+  }
+}
+
+/* ---------- SIDE NAV ---------- */
+
+
+
+/* ---------- MAIN ---------- */
 
 #wrapper  {
     margin: auto;
@@ -33,6 +64,7 @@ h1 {
     flex-direction: column;
     row-gap: 1em;
     /* background-color: aquamarine; */
+    font-size: 1em;
 }
 
 #tasks {
@@ -51,6 +83,15 @@ h1 {
     flex-direction: column;
     gap: 0.75rem;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#description {
+    font-size: inherit;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
 }
 
 #btn-wrapper {
@@ -99,39 +140,3 @@ button {
     margin-top: 1em;
 }
 
-input[type="text"] {
-    font-size: 1rem;
-    height: 32px;
-
-    border: 1px solid #ccc;
-    border-radius: 4px;
-
-    outline: none;
-
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
-
-    text-align: top;
-    vertical-align: top;
-}
-
-input[type="text"]:focus {
-    box-shadow:
-        inset 0 2px 6px rgba(0, 0, 0, 0.2),
-        0 0 0 3px rgba(79, 70, 229, 0.2);
-}
-
-#description {
-    height: 8em;
-    font-size: 1rem;
-
-    background-color: white;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    outline: none;
-
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
-    min-height: 120px;
-    padding: 0.5rem;
-}

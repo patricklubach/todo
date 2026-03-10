@@ -6,6 +6,7 @@ class Task {
     this.updatedAt = new Date();
     this.editMode = false;
     this.done = false;
+    this.archived = false;
   }
 
   save() {
@@ -61,6 +62,17 @@ class Tasks {
     return task;
   }
 
+  static loadAll() {
+    console.log("Loading all tasks")
+    const tasksList = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      let id = localStorage.key(i);
+      let task = this.load(id);
+      tasksList.push(task);
+    }
+    return tasksList;
+  }
+
   static add() {
     const description = document.getElementById("description").innerHTML;
     this.create(description);
@@ -73,23 +85,27 @@ class Tasks {
     this.display();
   }
 
-  static display() {
+  static display(tasks = []) {
     console.log("Displaying tasks");
-    const tasksList = [];
     const tasksElement = document.getElementById("tasks");
-    let tasks = document.createElement("div");
-    tasks.id = "tasks";
-    for (let i = 0; i < localStorage.length; i++) {
-      let id = localStorage.key(i);
-      let task = this.load(id);
-      tasksList.push(task);
+
+    let newTasksElement = document.createElement("div");
+    newTasksElement.id = "tasks";
+
+    let tasksList;
+    if (0 < tasks.length) {
+      tasksList = tasks;
+    } else {
+      tasksList = this.loadAll();
     }
     tasksList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
     for (let task of tasksList) {
       let taskElement = task.getHTMLElement();
-      tasks.appendChild(taskElement);
+      newTasksElement.appendChild(taskElement);
     }
-    tasksElement.replaceWith(tasks);
+    
+    tasksElement.replaceWith(newTasksElement);
   }
 
   static create(description) {
@@ -138,8 +154,10 @@ function format(cmd) {
 function init() {
   console.log("Initializing app");
   localStorage.clear();
+  const search = document.getElementById("search");
+  search.value = "";
   console.log("Adding tasks");
-  const tasks = ["foo", "bar", "foobar"];
+  const tasks = ["foo", "bar", "baz", "foobar"] //"lol", "lul", "lel", "lal", "bingo", "bongo", "bengo", "bango"];
 
   for (let i = 0; i < tasks.length; i++) {
     Tasks.create(tasks[i]);
