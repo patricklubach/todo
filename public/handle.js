@@ -127,28 +127,10 @@ class Tasks {
   }
 }
 
-function showError(err) {
-  const errorBox = document.getElementById("error");
-
-  errorBox.textContent = err.message;
-  errorBox.style.display = "block";
-
-  console.error(err);
-}
-
-
 function toggle(id) {
-  const task = document.getElementById(id);
-  const description = document.getElementById(`${id}-description`);
-
-  task.classList.toggle("done");
-  if (task.description) {
-    description.classList.toggle("done");
-  }
-}
-
-function format(cmd) {
-  document.execCommand(cmd);
+  const taskElement = document.getElementById(id);
+  const description = taskElement.querySelector("p");
+  description.classList.toggle("done");
 }
 
 function init() {
@@ -166,8 +148,4 @@ function init() {
   console.log("App initialized sucessfully");
 }
 
-try {
-  init();
-} catch (err) {
-  showError(err);
-}
+init();

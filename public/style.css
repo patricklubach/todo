@@ -132,11 +132,3 @@ button {
     border: none;
     border-radius: 1em;
 }
-
-#format-buttons {
-    display: flex;
-    flex-direction: row;
-    column-gap: 0.5em;
-    margin-top: 1em;
-}
-
