@@ -14,7 +14,7 @@ class Task {
     taskElement.id = this.id;
     taskElement.classList.add("task");
 
-    const descriptionElement = document.createElement("p");
+    const descriptionElement = this.editMode ? document.createElement("input") : document.createElement("p");
     descriptionElement.id = this.id;
     descriptionElement.innerHTML = this.description;
     if (this.done) {
@@ -26,38 +26,42 @@ class Task {
     btnWrapperElement.id = "btn-wrapper";
     taskElement.appendChild(btnWrapperElement);
 
-    const doneButton = document.createElement("button");
-    doneButton.classList.add("done-button");
-    doneButton.onclick = () => Tasks.toggleDone(this.id);
-    if (this.done) {
-      doneButton.textContent = "Undone";
+    if (this.editMode) {
+      const saveButton = document.createElement("button");
+      saveButton.classList.add("done-button");
+      saveButton.onclick = () => Tasks.save(this.id);
+      saveButton.textContent = "Save";
+      btnWrapperElement.appendChild(saveButton);
     } else {
-      doneButton.textContent = "Done";
+      const doneButton = document.createElement("button");
+      doneButton.classList.add("done-button");
+      doneButton.onclick = () => Tasks.toggleDone(this.id);
+      if (this.done) {
+        doneButton.textContent = "Undone";
+      } else {
+        doneButton.textContent = "Done";
+      }
+      btnWrapperElement.appendChild(doneButton);
+
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete-button");
+      deleteButton.onclick = () => Tasks.delete(this.id);
+      deleteButton.textContent = "Delete";
+      btnWrapperElement.appendChild(deleteButton);
+
+      const editButton = document.createElement("button");
+      editButton.classList.add("edit-button");
+      editButton.onclick = () => Tasks.edit(this.id);
+      editButton.textContent = "Edit";
+      btnWrapperElement.appendChild(editButton);
     }
-    btnWrapperElement.appendChild(doneButton);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("delete-button");
-    deleteButton.onclick = () => Tasks.delete(this.id);
-    deleteButton.textContent = "Delete";
-    btnWrapperElement.appendChild(deleteButton);
-
-    const editButton = document.createElement("button");
-    editButton.classList.add("edit-button");
-    editButton.onclick = () => Tasks.edit(this.id);
-    editButton.textContent = "Edit";
-    btnWrapperElement.appendChild(editButton);
 
     return taskElement;
   }
 
   save() {
-    try {
-      console.log(`Saving task (id: ${this.id})`);
-      localStorage.setItem(this.id, JSON.stringify(this));
-    } catch (error) {
-      showError(error);
-    }
+    console.log(`Saving task (id: ${this.id})`);
+    localStorage.setItem(this.id, JSON.stringify(this));
     console.log(`Task saved sucessfully (id: ${this.id})`);
   }
 
@@ -141,9 +145,16 @@ class Tasks {
     return tasksList;
   }
 
+  static save(id) {
+    const task = this.load(id);
+    task.editMode = false;
+    task.save();
+    this.display();
+  }
+
   static toggleDone(id) {
     const task = this.load(id);
-    task.done ? task.done = false : task.done = true;
+    task.done ? false : true;
     task.save();
     this.display();
   }
