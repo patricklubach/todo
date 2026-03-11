@@ -10,8 +10,18 @@
     </head>
 
     <body>
-        <div class="topnav">
-            <input type="text" id="search" placeholder="Search.. (⌘K / Ctrl+K)">
+        <div id="topnav">
+            <div id="sidepanel-btn-container" class="topnav-container">
+                <button id="sidepanel-btn" class="topnav-item" onclick="toggleSidePanel()">
+                    ☰
+                </button>
+            </div>
+            <div id="search-container" class="topnav-container">
+                <input type="text" id="search" class="topnav-item" placeholder="Search... ( ⌘K / Ctrl+K )">
+            </div>
+            <div id="create-btn-container" class="topnav-container">
+                <button id="create-task-btn" class="topnav-item" onclick="Tasks.add()">+</button>
+            </div>
         </div>
         <div id="wrapper">
             <div class="task" id="add-task">
