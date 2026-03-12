@@ -47,9 +47,10 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] store todos in backend (e.g. sqlite)
 - [ ] add possibility to duplicate task
 - [ ] make tasks editable
-- [x] Mark todo as done / Strike through todo when done
+- [ ] Mark todo as done / Strike through todo when done
 - [x] Task text formatting
-- [ ] Add sidepanel for multiple todo lists
+- [x] Add sidepanel for multiple todo lists
+- [ ] Add editor to task notes (https://codepen.io/fajarnurwahid/pen/NWvxeXj)
 - [ ] Add possibility to create multiple todo lists
 - [ ] links in separate section
 - [ ] deadline with date selector

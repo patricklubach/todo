@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>ToDo</title>
 
         <link rel="stylesheet" href="style.css" />
@@ -10,31 +13,50 @@
     </head>
 
     <body>
-        <div id="topnav">
-            <div id="sidepanel-btn-container" class="topnav-container">
-                <button id="sidepanel-btn" class="topnav-item" onclick="toggleSidePanel()">
-                    ☰
-                </button>
-            </div>
-            <div id="search-container" class="topnav-container">
-                <input type="text" id="search" class="topnav-item" placeholder="Search... ( ⌘K / Ctrl+K )">
-            </div>
-            <div id="create-btn-container" class="topnav-container">
-                <button id="create-task-btn" class="topnav-item" onclick="Tasks.add()">+</button>
+        <div id="topbar">
+            <div id="topbar-container-wrapper">
+                <div id="sidebar-btn-container" class="topbar-container">
+                    <button id="sidebar-btn" class="topbar-item" type="button" onclick="togglesidebar()">
+                        ☰
+                    </button>
+                </div>
+                <div id="search-container" class="topbar-container">
+                    <input type="text" id="search" class="topbar-item" placeholder="Search... ( ⌘K / Ctrl+K )">
+                </div>
+                <div id="create-btn-container" class="topbar-container">
+                    <button id="create-task-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
+                </div>
             </div>
         </div>
-        <div id="wrapper">
-            <div class="task" id="add-task">
-                <label for="add-todo">Enter your task:</label>
-                <div class="editor">
-                    <div id="description" contenteditable="true"></div>
+
+        <div class="wrapper">
+            <aside id="sidebar" class="sidebar">
+                <div id="create-tasklist-container" class="topbar-container">
+                    <button id="create-tasklist-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
                 </div>
-                <button class="add-button done-button" onclick="Tasks.add()">
-                    Add
-                </button>
-            </div>
-            <div id="tasks"></div>
-            <div id="error" style="display: none; color: red"></div>
+                <nav>
+                    <ul>
+                        <li>Dashboard</li>
+                        <li>Tasks</li>
+                        <li>Settings</li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main id="main-content">
+                <div id="content-container">
+                    <div id="add-task" class="task">
+                        <label for="add-todo">Enter your task:</label>
+                        <div class="editor">
+                            <div id="description" contenteditable="true"></div>
+                        </div>
+                        <button class="add-button done-button" type="button" onclick="Tasks.add()">
+                            Add
+                        </button>
+                    </div>
+                    <div id="tasks"></div>
+                </div>
+            </main>
         </div>
     </body>
 

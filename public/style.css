@@ -1,6 +1,15 @@
-* {
+:root {
+    --topbar-height: 60px;
+    --sidebar-width: 250px;
+}
+
+body {
+    /* colors */
+
+    /* Layout */
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
@@ -8,32 +17,31 @@
     font-variation-settings: "wdth" 100;
 }
 
-body {
-    font-family: sans-serif;
-    background-color: whitesmoke;
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: auto;
-    background-attachment: fixed;
-}
-
-/* ---------- TOPNAV ---------- */
-#topnav {
-    background-color: #202020;
-    position: sticky;
-    top: 0;
-    display: flex;
-    height: 4em;
+/* ---------- topbar ---------- */
+#topbar {
     width: 100%;
+    height: var(--topbar-height);
+    background-color: #202020;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    justify-content: center;
 }
 
-.topnav-container {
+#topbar-container-wrapper {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+}
+
+.topbar-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.topnav-item {
+.topbar-item {
     color: white;
     font-size: 1em;
     text-align: center;
@@ -43,7 +51,7 @@ body {
     border-radius: 1em;
 }
 
-.topnav-container button {
+.topbar-container button {
     border: none;
     font-size: 1em;
     width: 60%;
@@ -52,7 +60,7 @@ body {
     background-color: steelblue;
 }
 
-#sidepanel-btn-container {
+#sidebar-btn-container {
     flex: 1;
 }
 
@@ -64,20 +72,45 @@ body {
     flex: 1;
 }
 
-/* ---------- SIDE NAV ---------- */
+/*
+--------------- WRAPPER ---------------
+Container for sidebar and main content
+*/
 
+.wrapper {
+    height: calc(100vh - var(--topbar-height));
+    display: flex;
+    flex: 1;
+    margin-top: var(--topbar-height);
+    overflow: hidden;
+}
 
+/* ---------- SIDEBAR ---------- */
+
+.sidebar {
+    width: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+    background-color: #404040;
+    color: white;
+}
+
+.sidebar.hidden {
+    margin-left: calc(var(--sidebar-width) * -1);
+}
 
 /* ---------- MAIN ---------- */
 
-#wrapper  {
-    margin: auto;
-    min-width: auto;
-    max-width: 80%;
+#main-content  {
+    flex: 1;
+}
+
+/* Wrapper around add tasks und task items */
+#content-container {
     display: flex;
     flex-direction: column;
-    row-gap: 1em;
-    font-size: 1em;
+    row-gap: 1rem;
+    overflow-y: auto;
 }
 
 #tasks {
