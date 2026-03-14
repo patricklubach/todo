@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,25 +14,9 @@
     </head>
 
     <body>
-        <div id="topbar">
-            <div id="topbar-container-wrapper">
-                <div id="sidebar-btn-container" class="topbar-container">
-                    <button id="sidebar-btn" class="topbar-item" type="button" onclick="togglesidebar()">
-                        ☰
-                    </button>
-                </div>
-                <div id="search-container" class="topbar-container">
-                    <input type="text" id="search" class="topbar-item" placeholder="Search... ( ⌘K / Ctrl+K )">
-                </div>
-                <div id="create-btn-container" class="topbar-container">
-                    <button id="create-task-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="wrapper">
+        <div class="page-wrapper">
             <aside id="sidebar" class="sidebar">
-                <div id="create-tasklist-container" class="topbar-container">
+                <!-- <div id="create-tasklist-container" class="topbar-container">
                     <button id="create-tasklist-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
                 </div>
                 <nav>
@@ -40,22 +25,49 @@
                         <li>Tasks</li>
                         <li>Settings</li>
                     </ul>
-                </nav>
+                </nav> -->
             </aside>
 
-            <main id="main-content">
-                <div id="content-container">
-                    <div id="add-task" class="task">
-                        <label for="add-todo">Enter your task:</label>
-                        <div class="editor">
-                            <div id="description" contenteditable="true"></div>
+            <main class="content-wrapper">
+                <div id="topbar" class="topbar">
+                    <div class="topbar-container-wrapper">
+                        <div id="sidebar-btn-container" class="topbar-container">
+                            <button id="sidebar-btn" class="topbar-item" type="button" onclick="togglesidebar()">
+                                ☰
+                            </button>
                         </div>
-                        <button class="add-button done-button" type="button" onclick="Tasks.add()">
-                            Add
-                        </button>
+                        <div id="search-container" class="topbar-container">
+                            <input type="text" id="search" class="topbar-item" placeholder="Search... ( ⌘K / Ctrl+K )">
+                        </div>
+                        <div id="create-btn-container" class="topbar-container">
+                            <button id="create-task-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
+                        </div>
                     </div>
-                    <div id="tasks"></div>
                 </div>
+
+                <main class="main-content">
+                    <div class="content-container">
+                        <!-- <div id="add-task" class="task">
+                            <label for="add-todo">Enter your task:</label>
+                            <div class="editor">
+                                <div class="description" contenteditable="true"></div>
+                            </div>
+                            <button class="add-button done-button" type="button" onclick="Tasks.add()">
+                                Add
+                            </button>
+                        </div> -->
+                        <div class="tasks">
+                            <div class="task">content 1</div>
+                            <div class="task">content 2</div>
+                            <div class="task">content 1</div>
+                            <div class="task">content 2</div>
+                            <div class="task">content 1</div>
+                            <div class="task">content 2</div>
+                            <div class="task">content 1</div>
+                            <div class="task">content 2</div>
+                        </div>
+                    </div>
+                </main>
             </main>
         </div>
     </body>

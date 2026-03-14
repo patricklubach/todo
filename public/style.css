@@ -1,7 +1,13 @@
 :root {
     --topbar-height: 60px;
     --sidebar-width: 250px;
+    --sidebar-closed-width: 50px;
 }
+
+/* * {
+    padding: 0;
+    margin: 0;
+} */
 
 body {
     /* colors */
@@ -9,7 +15,8 @@ body {
     /* Layout */
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
@@ -17,18 +24,48 @@ body {
     font-variation-settings: "wdth" 100;
 }
 
-/* ---------- topbar ---------- */
-#topbar {
-    width: 100%;
-    height: var(--topbar-height);
-    background-color: #202020;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    justify-content: center;
+/*
+--------------- WRAPPER ---------------
+Container for sidebar and main content
+*/
+
+.page-wrapper {
+    display: flex;
+    flex-direction: row;
 }
 
-#topbar-container-wrapper {
+/* ---------- SIDEBAR ---------- */
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: #404040;
+    color: white;
+    position: sticky;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+
+/* ---------- MAIN CONTENT ---------- */
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* ---------- topbar ---------- */
+
+.topbar {
+    background-color: #202020;
+    height: var(--topbar-height);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.topbar-container-wrapper {
     width: inherit;
     height: inherit;
     display: flex;
@@ -57,63 +94,35 @@ body {
     width: 60%;
     border-radius: 1em;
     cursor: pointer;
-    background-color: steelblue;
 }
 
-#sidebar-btn-container {
+.sidebar-btn-container {
     flex: 1;
 }
 
-#search-container {
+.search-container {
     flex: 3;
 }
 
-#create-btn-container {
+.create-btn-container {
     flex: 1;
-}
-
-/*
---------------- WRAPPER ---------------
-Container for sidebar and main content
-*/
-
-.wrapper {
-    height: calc(100vh - var(--topbar-height));
-    display: flex;
-    flex: 1;
-    margin-top: var(--topbar-height);
-    overflow: hidden;
-}
-
-/* ---------- SIDEBAR ---------- */
-
-.sidebar {
-    width: var(--sidebar-width);
-    transition: margin-left 0.3s ease;
-    overflow-y: auto;
-    background-color: #404040;
-    color: white;
-}
-
-.sidebar.hidden {
-    margin-left: calc(var(--sidebar-width) * -1);
 }
 
 /* ---------- MAIN ---------- */
 
-#main-content  {
+.main-content  {
     flex: 1;
 }
 
 /* Wrapper around add tasks und task items */
-#content-container {
+.content-container {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
     overflow-y: auto;
 }
 
-#tasks {
+.tasks {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -130,7 +139,7 @@ Container for sidebar and main content
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#description {
+.description {
     font-size: inherit;
     border-bottom: 1px solid rgba(0, 0, 0, 0.183);
     font-weight: 400;
@@ -138,7 +147,7 @@ Container for sidebar and main content
     padding: 0.5rem;
 }
 
-#btn-wrapper {
+.btn-wrapper {
     display: flex;
     flex-direction: row;
     column-gap: 0.5em;
