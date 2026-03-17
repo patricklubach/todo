@@ -39,6 +39,7 @@
         * {
             margin: 0;
             padding: 0;
+            color: var(--text-color-primary);
         }
 
         html {
@@ -65,11 +66,6 @@
             border-radius: var(--element-radius);
             padding: 0.25em 0.5em;
             background-color: #568939;
-            color: var(--text-color-primary);
-        }
-
-        span {
-            color: var(--text-color-primary);
         }
 
         a {
@@ -96,10 +92,8 @@
         .sidebar-container {
             height: 2em;
             padding: 0 10px 0 10px;
-            color: var(--text-color-primary);
             display: flex;
             align-items: center;
-            /* background-color: red; */
         }
 
         .sidebar-selectable:hover {
@@ -114,11 +108,6 @@
             box-sizing: border-box;
             padding: 20px 0 0 0;
         }
-
-        /* .separator {
-            background-color: red;
-            color: black;
-        } */
 
         .separator hr {
             width: 100%;
@@ -137,16 +126,11 @@
 
         .profile-name {
             text-align: center;
-            color: var(--font-color-dark);
             word-break: break-word;
             width: 100%;
             height: 2em;
             justify-content: center;
             align-items: center;
-        }
-
-        .profile-name h2 {
-            color: var(--text-color-primary);
         }
 
         .create-list {
@@ -183,7 +167,6 @@
         .task-list-text {
             flex: 1;
             word-break: break-word;
-            color: var(--text-color-primary)
         }
 
         .task-list-buttons {
@@ -246,7 +229,6 @@
             border: none;
             outline: none;
             background-color: var(--bg-color-brighter5);
-            /* color: var(--text-color-primary); */
         }
 
         .create-task {
@@ -278,7 +260,6 @@
 
         .task {
             border-radius: var(--element-radius);
-            color: var(--main-content-bg-color);
             background-color: var(--bg-color-brighter4);
 
             padding: 5px;
@@ -286,10 +267,6 @@
             flex-direction: column;
             row-gap: 0.5em;
             padding: 1em;
-        }
-
-        .task-text {
-            color: var(--text-color-primary)
         }
 
         .task-btn-group {
@@ -397,9 +374,7 @@
                                 <h3>Task #1</h3>
                             </div>
                             <div class="links">
-                                <span>
-                                    <h4>Links:</h4>
-                                </span>
+                                <h4>Links:</h4>
                                 <a href="https://google.com">https://google.com</a>
                                 <a href="https://stackoverflow.com">https://stackoverflow.com</a>
                                 <a href="https://daily.dev">https://daily.dev</a>
