@@ -24,10 +24,25 @@
 
             --sidebar-width: 250px;
 
-            --text-color-primary: #fff;
 
             --element-radius: 8px;
 
+            --bg-dark: oklch(0.15 0 275);
+            --bg: oklch(0.2 0 275);
+            --bg-light: oklch(0.3 0 275);
+            --text: oklch(0.95 0 0);
+            --text-muted: oklch(0.76 0 275);
+            --highlight: oklch(0.5 0 275);
+            --border: oklch(0.4 0 275);
+            --border-muted: oklch(0.3 0 275);
+            --primary: oklch(0.76 0.1 275);
+            --secondary: oklch(55% 0.175 250 / 0.5);
+            --danger: oklch(0.7 0.05 30);
+            --warning: oklch(0.7 0.05 100);
+            --success: oklch(0.7 0.05 160);
+            --info: oklch(0.7 0.05 260);
+
+            /* --text-color-primary: var(--text); */
             --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-mid: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -36,7 +51,7 @@
         * {
             margin: 0;
             padding: 0;
-            color: var(--text-color-primary);
+            color: var(--text);
         }
 
         html {
@@ -52,7 +67,7 @@
         body {
             height: 100vh;
             width: 100vw;
-            background-color: var(--bg-color);
+            background-color: var(--bg);
         }
 
         button {
@@ -61,13 +76,12 @@
             border: none;
             font-size: 1rem;
             border-radius: var(--element-radius);
-            padding: 0.25em 0.5em;
-            background-color: #56893975;
+            background-color: var(--secondary);
             /* opacity: 0.3; */
         }
 
         a {
-            color: var(--bg-color-brighter5);
+            color: var(--text-muted);
         }
 
         .page-wrapper {
@@ -84,7 +98,7 @@
             display: flex;
             flex-direction: column;
             row-gap: 0.5em;
-            background-color: var(--bg-color-darker2);
+            background-color: var(--bg-dark);
         }
 
         .sidebar-container {
@@ -92,6 +106,10 @@
             padding: 0 10px 0 10px;
             display: flex;
             align-items: center;
+        }
+
+        .sidebar-container button {
+            padding: 0.1em 0.5em;
         }
 
         .sidebar-selectable:hover {
@@ -195,7 +213,7 @@
         }
 
         .topbar {
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             height: var(--topbar-height);
             position: sticky;
             display: flex;
@@ -258,12 +276,20 @@
 
         .task {
             border-radius: var(--element-radius);
-            background-color: var(--bg-color-brighter3);
+            background-color: var(--bg-light);
             padding: 5px;
             display: flex;
             flex-direction: column;
             row-gap: 0.5em;
             padding: 1em;
+        }
+
+        .topbar button {
+            padding: 0.1em 0.5em;
+        }
+
+        .task button {
+            padding: 0.25em 0.5em;
         }
 
         .task-btn-group {
@@ -283,6 +309,7 @@
             background-color: #ffffff25;
             border-radius: var(--element-radius);
             padding: 0.1em;
+            background-color: var(--bg-light);
         }
 
         .tags h4 {
