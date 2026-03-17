@@ -41,15 +41,13 @@ or open the `public` directory using the live server extension in vscode.
 
 - [x] display tasks sorted by createdAt
 - [x] Add new task
-  - [ ] Add task: quick mode
-  - [ ] Add task: advanced mode with modal box
 - [x] Delete task
 - [ ] Mark task as done -> Move to archive
 - [ ] Edit task
 - [x] make tasks persistent (e.g. through localStorage)
 - [ ] store tasks in backend (e.g. sqlite)
 - [ ] add possibility to duplicate task
-- [x] Task text formatting
+- [ ] Task text formatting
 - [x] Add sidepanel for multiple task lists
 - [ ] Add editor to task notes (https://codepen.io/fajarnurwahid/pen/NWvxeXj)
 - [ ] Add possibility to create multiple task lists

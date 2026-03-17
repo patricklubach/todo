@@ -9,24 +9,70 @@
 
     <style>
         :root {
-            --topbar-height: 50px;
+            --bg-color-darker2: oklch(from var(--bg-color) calc(l - 0.05) c h);
+            --bg-color-darker1: oklch(from var(--bg-color) calc(l - 0.05) c h);
+            --bg-color: #212121;
+            --bg-color-brighter1: oklch(from var(--bg-color) calc(l + 0.025) c h);
+            --bg-color-brighter2: oklch(from var(--bg-color) calc(l + 0.05) c h);
+            --bg-color-brighter3: oklch(from var(--bg-color) calc(l + 0.1) c h);
+            --bg-color-brighter4: oklch(from var(--bg-color) calc(l + 0.15) c h);
+
+            --topbar-height: 40px;
+            --topbar-bg-color: oklch(from var(--primary-bg-color) calc(l - 0.03) c h);
+
             --sidebar-width: 250px;
+            --sidebar-bg-color: #181818;
+            --sidebar-bg-color-hover: #303030;
+
+            --text-color-primary: #fff;
+
+            --main-content-bg-color: #212121;
+
+            --element-radius: 8px;
 
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        body {
+        * {
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            tab-size: 4;
+            line-height: 1.5;
+            font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+            font-feature-settings: var(--default-font-feature-settings, normal);
+            font-variation-settings: var(--default-font-variation-settings, normal);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
             height: 100vh;
             width: 100vw;
+            background-color: var(--bg-color);
         }
 
         button {
             cursor: pointer;
-            padding: 5px 10px;
+            outline: none;
+            border: none;
+            font-size: 1rem;
+            border-radius: var(--element-radius);
+            padding: 0.5em;
+            background-color: #568939;
+            color: var(--text-color-primary);
+        }
+
+        span {
+            color: var(--text-color-primary);
+        }
+
+        a {
+            color: #181818;
         }
 
         .page-wrapper {
@@ -42,24 +88,42 @@
             left: 0;
             display: flex;
             flex-direction: column;
-            background-color: #333333;
+            row-gap: 0.5em;
+            background-color: var(--bg-color-darker2);
         }
 
         .sidebar-container {
-            /* border: 1px solid black; */
             height: 2em;
+            padding: 0 10px 0 10px;
+            color: var(--text-color-primary);
+            display: flex;
+            align-items: center;
+            /* background-color: red; */
         }
 
-        .profile-container {
-            display: flex;
+        .sidebar-selectable:hover {
+            background-color: var(--bg-color-brighter1);
+        }
+
+        .profile {
             flex-direction: column;
             align-items: center;
             width: 100%;
             height: auto;
             box-sizing: border-box;
-            /* background-color: lightblue; */
-            border-bottom: solid 1px #e2e2e250;
             padding: 20px 0 0 0;
+        }
+
+        /* .separator {
+            background-color: red;
+            color: black;
+        } */
+
+        .separator hr {
+            width: 100%;
+            border: none;
+            background-color: white;
+            height: 1px;
         }
 
         .profile-pic {
@@ -71,104 +135,92 @@
         }
 
         .profile-name {
-            font-size: 1rem;
             text-align: center;
+            color: var(--font-color-dark);
             word-break: break-word;
             width: 100%;
-            /* background-color: chocolate; */
-            color: whitesmoke;
-            font-size: x-large;
             height: 2em;
-            display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        .profile-name h2 {
+            color: var(--text-color-primary);
+        }
+
         .create-list {
-            /* background-color: lightseagreen; */
-            display: flex;
             justify-content: center;
             align-items: center;
             height: 2em;
         }
 
         .create-list button {
-            width: 70%;
-            border-radius: 5px;
+            border-radius: var(--element-radius);
         }
 
         .task-lists {
-            background-color: #5c5c5c;
+            background-color: var(--task-list-bg-color);
             display: flex;
             flex-direction: column;
             flex: 1;
             row-gap: 0.5em;
             overflow-y: auto;
-            padding-top: 0.5em;
-            padding-bottom: 0.5em;
+            padding: 0.5em 0 0.5em 0;
+        }
+
+        .sidebar-functions {
+            border-top: #444 solid 1px;
         }
 
         .task-list {
-            /* background-color: rgb(114, 152, 143); */
-            border: 1px black solid;
             height: 2em;
             position: relative;
-            display: flex;
             flex-direction: row;
             align-items: center;
-            color: whitesmoke;
         }
 
         .task-list-text {
             flex: 1;
             word-break: break-word;
+            color: var(--text-color-primary)
         }
 
         .task-list-buttons {
             display: flex;
             gap: 8px;
             width: 30%;
-            /* Limits buttons to max 30% of container */
             justify-content: flex-end;
             align-items: center;
-            /* Pushes buttons to the very end */
             flex-shrink: 0;
-            /* Prevents the buttons from squishing */
-            /* background-color: blueviolet; */
+        }
+
+        .archive {
+            text-align: left;
         }
 
         .settings {
-            display: flex;
             justify-content: flex-end;
             align-items: center;
-            /* background-color: lightgoldenrodyellow; */
-            color: #ffffff;
             padding: 0 0 0 10px;
-        }
-
-        .task-list-buttons button {
-            display: flex;
-            flex-direction: row;
-            flex: 0 1 auto;
-
         }
 
         .content-wrapper {
             display: flex;
             flex-direction: column;
             flex: 1;
+            row-gap: 1em;
+            padding: 20px;
         }
 
         .topbar {
+            background-color: var(--bg-color);
             height: var(--topbar-height);
             position: sticky;
             display: flex;
             flex-direction: row;
             top: 0;
             z-index: 1000;
-            background-color: #444444;
             align-items: center;
-            padding: 20px 20px;
             justify-content: space-between;
         }
 
@@ -180,13 +232,11 @@
 
         .menu {
             justify-content: flex-start;
-            /* background-color: red; */
         }
 
         .search {
             align-items: center;
             justify-content: center;
-            /* background-color: blue; */
         }
 
         .search input {
@@ -197,8 +247,11 @@
         }
 
         .create-task {
-            /* background-color: yellow; */
             justify-content: flex-end;
+        }
+
+        .tasks-functions {
+            background-color: var(--main-content-bg-color);
         }
 
         .main-content {
@@ -206,35 +259,47 @@
             display: flex;
             flex-direction: column;
             row-gap: 1em;
-            margin: 20px;
+            background-color: var(--main-content-bg-color);
         }
 
-        .tasks {
-            /* background-color: orange; */
+        .links {
             display: flex;
             flex-direction: column;
         }
 
+        .tasks {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1em;
+        }
+
         .task {
-            border: 1px black solid;
-            box-shadow: var(--shadow-md);
-            border-radius: 4px;
-            /* background-color: aliceblue; */
+            border-radius: var(--element-radius);
+            color: var(--main-content-bg-color);
+            background-color: var(--bg-color-brighter4);
+
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.5em;
+            padding: 1em;
         }
 
         .task-text {
-            /* background-color: burlywood; */
-            padding: 1rem;
+            color: var(--text-color-primary)
         }
 
         .task-btn-group {
-            /* background-color: greenyellow; */
             display: flex;
             flex-direction: row;
             flex: 0 1 auto;
             gap: 5px;
-            padding: 0.5rem;
-            border-top: 1px solid #44444476;
+            border-top: 1px solid #444444;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: row;
         }
     </style>
 
@@ -242,18 +307,38 @@
         <div class="page-wrapper">
             <aside class="sidebar">
 
-                <div class="sidebar-container profile-container">
+                <div class="sidebar-container profile">
                     <img src="profile.png" alt="Profile" class="profile-pic">
-                    <div class="profile-name">John Doe</div>
+                    <div class="sidebar-container profile-name">
+                        <h2>John Doe</h2>
+                    </div>
+                </div>
+
+                <div class="sidebar-container separator">
+                    <hr>
                 </div>
 
                 <div class="sidebar-container create-list">
                     <button id="create-list-btn" class="create-list-btn">Create List</button>
                 </div>
 
-                <div class="sidebar-container task-lists">
-                    <div class="task-list">
+                <div class="task-lists">
+                    <div class="sidebar-container sidebar-selectable task-list">
                         <div class="task-list-text">Task List 1</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable task-list">
+                        <div class="task-list-text">Task List 2</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable task-list">
+                        <div class="task-list-text">Task List 3</div>
                         <div class="task-list-buttons">
                             <button class="edit-btn">Edit</button>
                             <button class="delete-btn">Delete</button>
@@ -261,10 +346,17 @@
                     </div>
                 </div>
 
-                <div class="sidebar-container settings">
-                    <div class="task-list-text">Settings</div>
-                    <div class="settings-buttons">
-                        <button class="settings-btn">Settings</button>
+                <div class="sidebar-functions">
+                    <div class="sidebar-container sidebar-selectable archive">
+                        <span>Archive</span>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable  settings">
+                        <div class="task-list-text">
+                            <span>Settings</span>
+                        </div>
+                        <div class="settings-buttons">
+                            <button class="settings-btn">Settings</button>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -283,18 +375,98 @@
                     </div>
                 </div>
 
+                <div class="separator content-separator">
+                    <hr>
+                </div>
+
+                <div class="tasks-functions">
+                    <div>
+                        <button class="sort-btn">Sort By</button>
+                        <button class="filter-btn">Filter</button>
+                    </div>
+                </div>
+
                 <div class="main-content">
                     <div class="tasks">
+
                         <div class="task">
-                            <div class="task-text">Task #1</div>
+                            <div class="task-text">
+                                <h3>Task #1</h3>
+                            </div>
+                            <div class="links">
+                                <span>Links:</span>
+                                <a href="https://google.com">https://google.com</a>
+                                <a href="https://stackoverflow.com">https://stackoverflow.com</a>
+                                <a href="https://daily.dev">https://daily.dev</a>
+                            </div>
+                            <div class="tags">
+                                <span>Tags: cool, wow, such unique, idontwanttodothistask</span>
+                            </div>
                             <div class="task-btn-group">
                                 <button class="task-btn">Done</button>
                                 <button class="task-btn">Edit</button>
                                 <button class="task-btn">Delete</button>
                                 <button class="task-btn">Duplicate</button>
+                                <button class="task-btn">Tags</button>
+                                <button class="task-btn">Priority</button>
+                                <button class="task-btn">Due Date</button>
+                                <button class="task-btn">Timer</button>
+                                <button class="task-btn">Info</button>
                             </div>
                         </div>
+                        <div class="task">
+                            <div class="task-text">
+                                <h3>Task #2</h3>
+                            </div>
+                            <div class="links">
+                                <span>Links:</span>
+                                <a href="https://google.com">https://google.com</a>
+                                <a href="https://stackoverflow.com">https://stackoverflow.com</a>
+                                <a href="https://daily.dev">https://daily.dev</a>
+                            </div>
+                            <div class="tags">
+                                <span>Tags: cool, wow, such unique, idontwanttodothistask</span>
+                            </div>
+                            <div class="task-btn-group">
+                                <button class="task-btn">Done</button>
+                                <button class="task-btn">Edit</button>
+                                <button class="task-btn">Delete</button>
+                                <button class="task-btn">Duplicate</button>
+                                <button class="task-btn">Tags</button>
+                                <button class="task-btn">Priority</button>
+                                <button class="task-btn">Due Date</button>
+                                <button class="task-btn">Timer</button>
+                                <button class="task-btn">Info</button>
+                            </div>
+                        </div>
+                        <div class="task">
+                            <div class="task-text">
+                                <h3>Task #3</h3>
+                            </div>
+                            <div class="links">
+                                <span>Links:</span>
+                                <a href="https://google.com">https://google.com</a>
+                                <a href="https://stackoverflow.com">https://stackoverflow.com</a>
+                                <a href="https://daily.dev">https://daily.dev</a>
+                            </div>
+                            <div class="tags">
+                                <span>Tags: cool, wow, such unique, idontwanttodothistask</span>
+                            </div>
+                            <div class="task-btn-group">
+                                <button class="task-btn">Done</button>
+                                <button class="task-btn">Edit</button>
+                                <button class="task-btn">Delete</button>
+                                <button class="task-btn">Duplicate</button>
+                                <button class="task-btn">Tags</button>
+                                <button class="task-btn">Priority</button>
+                                <button class="task-btn">Due Date</button>
+                                <button class="task-btn">Timer</button>
+                                <button class="task-btn">Info</button>
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
             </main>
         </div>
