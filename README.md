@@ -39,20 +39,20 @@ or open the `public` directory using the live server extension in vscode.
 
 ## Todo
 
-- [x] display todos sorted by createdAt
-- [x] Add new todo
-  - [ ] Add todo: quick mode
-  - [ ] Add todo: advanced mode with modal box
-- [x] Delete todo
-- [x] make todos persistent (e.g. through localStorage)
-- [ ] store todos in backend (e.g. sqlite)
+- [x] display tasks sorted by createdAt
+- [x] Add new task
+  - [ ] Add task: quick mode
+  - [ ] Add task: advanced mode with modal box
+- [x] Delete task
+- [ ] Mark task as done -> Move to archive
+- [ ] Edit task
+- [x] make tasks persistent (e.g. through localStorage)
+- [ ] store tasks in backend (e.g. sqlite)
 - [ ] add possibility to duplicate task
-- [ ] make tasks editable
-- [ ] Mark todo as done / Strike through todo when done
 - [x] Task text formatting
-- [x] Add sidepanel for multiple todo lists
+- [x] Add sidepanel for multiple task lists
 - [ ] Add editor to task notes (https://codepen.io/fajarnurwahid/pen/NWvxeXj)
-- [ ] Add possibility to create multiple todo lists
+- [ ] Add possibility to create multiple task lists
 - [ ] links in separate section
 - [ ] deadline with date selector
 - [ ] deadline progress bar
@@ -66,7 +66,8 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] make meta information visible
 - [ ] add CLI support
 - [ ] add searching and filtering tasks
-- [ ] add archive for archived and/or finished or deleted todos
+- [ ] add archive for archived and/or finished or deleted tasks
 - [ ] add switch between simple and advanced mode
-- [ ] add REST API for managing todos
-- [ ] sorting for todo lists and tasks
+- [ ] add REST API for managing tasks
+- [ ] sorting for task lists and tasks
+- [ ] Subtask
