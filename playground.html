@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HTML Playground</title>
+    </head>
+
+    <style>
+        :root {
+            --topbar-height: 50px;
+            --sidebar-width: 250px;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #333333;
+        }
+
+        .sidebar-container {
+            /* border: 1px solid black; */
+            height: 2em;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            /* background-color: lightblue; */
+            border-bottom: solid 1px #e2e2e250;
+            padding: 20px 0 0 0;
+        }
+
+        .profile-pic {
+            width: 60%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .profile-name {
+            font-size: 1rem;
+            text-align: center;
+            word-break: break-word;
+            width: 100%;
+            /* background-color: chocolate; */
+            color: whitesmoke;
+            font-size: x-large;
+            height: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .create-list {
+            /* background-color: lightseagreen; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 2em;
+        }
+
+        .create-list button {
+            width: 70%;
+            border-radius: 5px;
+        }
+
+        .task-lists {
+            background-color: #5c5c5c;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            row-gap: 0.5em;
+            overflow-y: auto;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
+        .task-list {
+            /* background-color: rgb(114, 152, 143); */
+            border: 1px black solid;
+            height: 2em;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: whitesmoke;
+        }
+
+        .task-list-text {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .task-list-buttons {
+            display: flex;
+            gap: 8px;
+            width: 30%;
+            /* Limits buttons to max 30% of container */
+            justify-content: flex-end;
+            align-items: center;
+            /* Pushes buttons to the very end */
+            flex-shrink: 0;
+            /* Prevents the buttons from squishing */
+            /* background-color: blueviolet; */
+        }
+
+        .settings {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            /* background-color: lightgoldenrodyellow; */
+            color: #ffffff;
+            padding: 0 0 0 10px;
+        }
+
+        .task-list-buttons button {
+            display: flex;
+            flex-direction: row;
+            flex: 0 1 auto;
+
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            position: sticky;
+            display: flex;
+            flex-direction: row;
+            top: 0;
+            z-index: 1000;
+            background-color: #444444;
+            align-items: center;
+            padding: 20px 20px;
+            justify-content: space-between;
+        }
+
+        .topbar div {
+            display: flex;
+            height: 70%;
+            flex: 1;
+        }
+
+        .menu {
+            justify-content: flex-start;
+            /* background-color: red; */
+        }
+
+        .search {
+            align-items: center;
+            justify-content: center;
+            /* background-color: blue; */
+        }
+
+        .search input {
+            height: 100%;
+            width: 100%;
+            border: none;
+            outline: none;
+        }
+
+        .create-task {
+            /* background-color: yellow; */
+            justify-content: flex-end;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            row-gap: 1em;
+            margin: 20px;
+        }
+
+        .tasks {
+            /* background-color: orange; */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task {
+            border: 1px black solid;
+            box-shadow: var(--shadow-md);
+            border-radius: 4px;
+            /* background-color: aliceblue; */
+        }
+
+        .task-text {
+            /* background-color: burlywood; */
+            padding: 1rem;
+        }
+
+        .task-btn-group {
+            /* background-color: greenyellow; */
+            display: flex;
+            flex-direction: row;
+            flex: 0 1 auto;
+            gap: 5px;
+            padding: 0.5rem;
+            border-top: 1px solid #44444476;
+        }
+    </style>
+
+    <body>
+        <div class="page-wrapper">
+            <aside class="sidebar">
+
+                <div class="sidebar-container profile-container">
+                    <img src="profile.png" alt="Profile" class="profile-pic">
+                    <div class="profile-name">John Doe</div>
+                </div>
+
+                <div class="sidebar-container create-list">
+                    <button id="create-list-btn" class="create-list-btn">Create List</button>
+                </div>
+
+                <div class="sidebar-container task-lists">
+                    <div class="task-list">
+                        <div class="task-list-text">Task List 1</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-container settings">
+                    <div class="task-list-text">Settings</div>
+                    <div class="settings-buttons">
+                        <button class="settings-btn">Settings</button>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-wrapper">
+
+                <div class="topbar">
+                    <div class="menu">
+                        <button class="toogle-btn">Toggle Menu</button>
+                    </div>
+                    <div class="search">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <div class="create-task">
+                        <button class="create-task-btn">Create Task</button>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="tasks">
+                        <div class="task">
+                            <div class="task-text">Task #1</div>
+                            <div class="task-btn-group">
+                                <button class="task-btn">Done</button>
+                                <button class="task-btn">Edit</button>
+                                <button class="task-btn">Delete</button>
+                                <button class="task-btn">Duplicate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+
+</html>

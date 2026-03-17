@@ -25,6 +25,7 @@ A fullstack todo web application that I ever wanted and hopefully create.
 - searchable tasks
 - meta information (task counter, created_at, updated_at, etc)
 - REST API for managing todos
+- sorting for todo lists and tasks
 
 ## Usage
 
@@ -68,3 +69,4 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] add archive for archived and/or finished or deleted todos
 - [ ] add switch between simple and advanced mode
 - [ ] add REST API for managing todos
+- [ ] sorting for todo lists and tasks
