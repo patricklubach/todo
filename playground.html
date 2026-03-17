@@ -16,6 +16,7 @@
             --bg-color-brighter2: oklch(from var(--bg-color) calc(l + 0.05) c h);
             --bg-color-brighter3: oklch(from var(--bg-color) calc(l + 0.1) c h);
             --bg-color-brighter4: oklch(from var(--bg-color) calc(l + 0.15) c h);
+            --bg-color-brighter5: oklch(from var(--bg-color) calc(l + 0.75) c h);
 
             --topbar-height: 40px;
             --topbar-bg-color: oklch(from var(--primary-bg-color) calc(l - 0.03) c h);
@@ -244,6 +245,8 @@
             width: 100%;
             border: none;
             outline: none;
+            background-color: var(--bg-color-brighter5);
+            /* color: var(--text-color-primary); */
         }
 
         .create-task {
