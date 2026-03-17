@@ -11,29 +11,26 @@
         :root {
             --bg-color-darker2: oklch(from var(--bg-color) calc(l - 0.05) c h);
             --bg-color-darker1: oklch(from var(--bg-color) calc(l - 0.05) c h);
-            --bg-color: #212121;
+            --bg-color: #202020;
             --bg-color-brighter1: oklch(from var(--bg-color) calc(l + 0.025) c h);
             --bg-color-brighter2: oklch(from var(--bg-color) calc(l + 0.05) c h);
             --bg-color-brighter3: oklch(from var(--bg-color) calc(l + 0.1) c h);
-            --bg-color-brighter4: oklch(from var(--bg-color) calc(l + 0.15) c h);
-            --bg-color-brighter5: oklch(from var(--bg-color) calc(l + 0.75) c h);
+            --bg-color-brighter4: oklch(from var(--bg-color) calc(l + 0.25) c h);
+            --bg-color-brighter5: oklch(from var(--bg-color) calc(l + 0.5) c h);
+            --bg-color-brighter6: oklch(from var(--bg-color) calc(l + 0.75) c h);
+            --bg-color-brighter10: oklch(from var(--bg-color) calc(l + 0.5) c h);
 
             --topbar-height: 40px;
-            --topbar-bg-color: oklch(from var(--primary-bg-color) calc(l - 0.03) c h);
 
             --sidebar-width: 250px;
-            --sidebar-bg-color: #181818;
-            --sidebar-bg-color-hover: #303030;
 
             --text-color-primary: #fff;
 
-            --main-content-bg-color: #212121;
-
             --element-radius: 8px;
 
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-mid: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -65,11 +62,12 @@
             font-size: 1rem;
             border-radius: var(--element-radius);
             padding: 0.25em 0.5em;
-            background-color: #568939;
+            background-color: #56893975;
+            /* opacity: 0.3; */
         }
 
         a {
-            color: #181818;
+            color: var(--bg-color-brighter5);
         }
 
         .page-wrapper {
@@ -228,7 +226,7 @@
             width: 100%;
             border: none;
             outline: none;
-            background-color: var(--bg-color-brighter5);
+            background-color: var(--bg-color-brighter6);
         }
 
         .create-task {
@@ -260,8 +258,7 @@
 
         .task {
             border-radius: var(--element-radius);
-            background-color: var(--bg-color-brighter4);
-
+            background-color: var(--bg-color-brighter3);
             padding: 5px;
             display: flex;
             flex-direction: column;
@@ -280,6 +277,16 @@
         .btn-group {
             display: flex;
             flex-direction: row;
+        }
+
+        .tags span {
+            background-color: #ffffff25;
+            border-radius: var(--element-radius);
+            padding: 0.1em;
+        }
+
+        .tags h4 {
+            display: inline;
         }
     </style>
 
@@ -380,7 +387,12 @@
                                 <a href="https://daily.dev">https://daily.dev</a>
                             </div>
                             <div class="tags">
-                                <span>Tags: cool, wow, such unique, idontwanttodothistask</span>
+                                <h4>Tags:</h4>
+                                <span>cool</span>
+                                <span>wow</span>
+                                <span>such</span>
+                                <span>unique</span>
+                                <span>idontwanttodothistask</span>
                             </div>
                             <div class="task-btn-group">
                                 <button class="task-btn">Done</button>
