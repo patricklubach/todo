@@ -1,78 +1,634 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title>ToDo</title>
-
-        <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <title>Task List</title>
     </head>
+
+    <style>
+        :root {
+            --bg-color-darker2: oklch(from var(--bg-color) calc(l - 0.05) c h);
+            --bg-color-darker1: oklch(from var(--bg-color) calc(l - 0.05) c h);
+            --bg-color: #202020;
+            --bg-color-brighter1: oklch(from var(--bg-color) calc(l + 0.025) c h);
+            --bg-color-brighter2: oklch(from var(--bg-color) calc(l + 0.05) c h);
+            --bg-color-brighter3: oklch(from var(--bg-color) calc(l + 0.1) c h);
+            --bg-color-brighter4: oklch(from var(--bg-color) calc(l + 0.25) c h);
+            --bg-color-brighter5: oklch(from var(--bg-color) calc(l + 0.5) c h);
+            --bg-color-brighter6: oklch(from var(--bg-color) calc(l + 0.75) c h);
+            --bg-color-brighter10: oklch(from var(--bg-color) calc(l + 0.5) c h);
+
+            --topbar-height: 40px;
+
+            --sidebar-width: 250px;
+
+            --element-radius: 8px;
+
+            --bg-dark: oklch(0.15 0 275);
+            --bg: oklch(0.2 0 275);
+            --bg-light: oklch(0.3 0 275);
+            --text: oklch(0.95 0 0);
+            --text-muted: oklch(0.76 0 275);
+            --highlight: oklch(0.5 0 275);
+            --border: oklch(0.4 0 275);
+            --border-muted: oklch(0.3 0 275);
+            --primary: oklch(0.76 0.1 275);
+            --secondary: oklch(55% 0.175 250 / 0.5);
+            --danger: oklch(0.7 0.05 30);
+            --warning: oklch(0.7 0.05 100);
+            --success: oklch(0.7 0.05 160);
+            --info: oklch(0.7 0.05 260);
+
+            /* --text-color-primary: var(--text); */
+            --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-mid: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            tab-size: 4;
+            line-height: 1.5;
+            font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+            font-feature-settings: var(--default-font-feature-settings, normal);
+            font-variation-settings: var(--default-font-variation-settings, normal);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-color: var(--bg);
+        }
+
+        button {
+            display: flex;
+            flex-direction: row;
+            row-gap: 80px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+            /* border: 1px solid var(--border); */
+            border: none;
+            font-size: 1rem;
+            border-radius: var(--element-radius);
+            background-color: inherit;
+        }
+
+        button:hover {
+            background-color: var(--highlight);
+        }
+
+        a {
+            color: var(--text-muted);
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.5em;
+            background-color: var(--bg-dark);
+        }
+
+        .sidebar-container {
+            height: 2em;
+            padding: 0 10px 0 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-container button {
+            padding: 0.1em 0.5em;
+        }
+
+        .sidebar-selectable:hover {
+            background-color: var(--bg-color-brighter1);
+        }
+
+        .profile {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            padding: 20px 0 0 0;
+        }
+
+        .separator hr {
+            width: 100%;
+            border: none;
+            background-color: #444;
+            height: 1px;
+        }
+
+        .profile-pic {
+            width: 60%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .profile-name {
+            text-align: center;
+            word-break: break-word;
+            width: 100%;
+            height: 2em;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .create-list {
+            justify-content: center;
+            align-items: center;
+            height: 2em;
+        }
+
+        .create-list button {
+            border-radius: var(--element-radius);
+        }
+
+        .task-lists {
+            background-color: var(--task-list-bg-color);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            row-gap: 0.5em;
+            overflow-y: auto;
+            padding: 0.5em 0 0.5em 0;
+        }
+
+        .sidebar-functions {
+            border-top: #444 solid 1px;
+        }
+
+        .task-list {
+            height: 2em;
+            position: relative;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .task-list-text {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .task-list-buttons {
+            display: flex;
+            gap: 8px;
+            width: 30%;
+            justify-content: flex-end;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .archive {
+            text-align: left;
+        }
+
+        .settings {
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 0 0 10px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            row-gap: 1em;
+            padding: 20px;
+        }
+
+        .topbar {
+            background-color: var(--bg);
+            height: var(--topbar-height);
+            position: sticky;
+            display: flex;
+            flex-direction: row;
+            top: 0;
+            z-index: 1000;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar button {
+            padding: 0.1em 0.5em;
+        }
+
+        .topbar div {
+            display: flex;
+            height: 70%;
+            flex: 1;
+        }
+
+        .menu {
+            justify-content: flex-start;
+        }
+
+        .search {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search input {
+            height: 100%;
+            width: 100%;
+            border: none;
+            outline: none;
+            background-color: var(--bg-color-brighter6);
+            color: #000;
+        }
+
+        .create-task {
+            justify-content: flex-end;
+        }
+
+        .tasks-functions {
+            background-color: var(--main-content-bg-color);
+            display: flex;
+            flex-direction: row;
+            row-gap: 14px;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            row-gap: 1em;
+            background-color: var(--main-content-bg-color);
+            /* align-items: center; */
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tasks {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1em;
+        }
+
+        .task {
+            border-radius: var(--element-radius);
+            background-color: var(--bg-light);
+            border: 1px solid var(--highlight);
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 1em;
+            padding: 1em;
+        }
+
+        .task button {
+            padding: 0.25em 0.5em;
+        }
+
+        .task-btn-group {
+            display: flex;
+            flex-direction: row;
+            flex: 0 1 auto;
+            gap: 5px;
+            border-top: 1px solid #444444;
+            padding-top: 1em;
+
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tags {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px;
+            /* justify-content: center; */
+        }
+
+        .tags span {
+            background-color: #ffffff25;
+            border-radius: var(--element-radius);
+            padding: 0.1em;
+            background-color: var(--bg-light);
+        }
+
+        .tags span {
+            background-color: var(--highlight);
+        }
+
+        .icon {
+            fill: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Modal box - create task */
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        /* Modal */
+        .modal {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--highlight);
+            border-radius: var(--element-radius);
+            padding: 32px;
+            width: 100%;
+            max-width: 420px;
+            /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2); */
+            animation: pop .2s ease;
+            z-index: 2;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal input[type="text"] {
+            width: 100%;
+            height: 2rem;
+            /* padding: 10px 14px; */
+            border: 1.5px solid #ddd;
+            border-radius: var(--element-radius);
+            outline: none;
+            transition: border-color .2s;
+            color: #000;
+            padding: 0 8px 0 8px;
+        }
+
+        .modal input[type="text"]:focus {
+            border-color: var(--highlight);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-dark);
+        }
+    </style>
 
     <body>
         <div class="page-wrapper">
-            <aside id="sidebar" class="sidebar">
-                <!-- <div id="create-tasklist-container" class="topbar-container">
-                    <button id="create-tasklist-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
+            <aside class="sidebar">
+
+                <div class="sidebar-container profile">
+                    <img src="profile.png" alt="Profile" class="profile-pic">
+                    <div class="sidebar-container profile-name">
+                        <h2>John Doe</h2>
+                    </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li>Dashboard</li>
-                        <li>Tasks</li>
-                        <li>Settings</li>
-                    </ul>
-                </nav> -->
+
+                <div class="sidebar-container separator">
+                    <hr>
+                </div>
+
+                <div class="sidebar-container create-list">
+                    <button id="create-list-btn" class="create-list-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                            <path d="M160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96L160 96zM296 408L296 344L232 344C218.7 344 208 333.3 208 320C208 306.7 218.7 296 232 296L296 296L296 232C296 218.7 306.7 208 320 208C333.3 208 344 218.7 344 232L344 296L408 296C421.3 296 432 306.7 432 320C432 333.3 421.3 344 408 344L344 344L344 408C344 421.3 333.3 432 320 432C306.7 432 296 421.3 296 408z" />
+                        </svg>
+                        <p>Create List</p>
+                    </button>
+                </div>
+
+                <div class="task-lists">
+                    <div class="sidebar-container sidebar-selectable task-list">
+                        <div class="task-list-text">Task List 1</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                </svg></button>
+                            <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable task-list">
+                        <div class="task-list-text">Task List 2</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                </svg></button>
+                            <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable task-list">
+                        <div class="task-list-text">Task List 3</div>
+                        <div class="task-list-buttons">
+                            <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                </svg></button>
+                            <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
+                                </svg></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-functions">
+                    <div class="sidebar-container sidebar-selectable  settings">
+                        <div class="task-list-text">
+                            <span>Archive</span>
+                        </div>
+                        <div class="settings-buttons">
+                            <button class="settings-btn">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path fill="rgb(255, 255, 255)" d="M0 64C0 46.3 14.3 32 32 32l448 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96L0 64zM32 176l448 0 0 240c0 35.3-28.7 64-64 64L96 480c-35.3 0-64-28.7-64-64l0-240zm152 64c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sidebar-container sidebar-selectable  settings">
+                        <div class="task-list-text">
+                            <span>Settings</span>
+                        </div>
+                        <div class="settings-buttons">
+                            <button class="settings-btn">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path fill="rgb(255, 255, 255)" d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </aside>
 
             <main class="content-wrapper">
-                <div id="topbar" class="topbar">
-                    <div class="topbar-container-wrapper">
-                        <div id="sidebar-btn-container" class="topbar-container">
-                            <button id="sidebar-btn" class="topbar-item" type="button" onclick="togglesidebar()">
-                                ☰
-                            </button>
-                        </div>
-                        <div id="search-container" class="topbar-container">
-                            <input type="text" id="search" class="topbar-item" placeholder="Search... ( ⌘K / Ctrl+K )">
-                        </div>
-                        <div id="create-btn-container" class="topbar-container">
-                            <button id="create-task-btn" class="topbar-item" type="button" onclick="Tasks.add()">+</button>
-                        </div>
+
+                <div class="topbar">
+                    <div class="menu">
+                        <button class="toogle-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                <path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z" />
+                            </svg></button>
+                    </div>
+                    <div class="search">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <div class="create-task">
+                        <button class="create-task-btn" class="open-btn" onclick="openModal()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                <path d="M160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96L160 96zM296 408L296 344L232 344C218.7 344 208 333.3 208 320C208 306.7 218.7 296 232 296L296 296L296 232C296 218.7 306.7 208 320 208C333.3 208 344 218.7 344 232L344 296L408 296C421.3 296 432 306.7 432 320C432 333.3 421.3 344 408 344L344 344L344 408C344 421.3 333.3 432 320 432C306.7 432 296 421.3 296 408z" />
+                            </svg>
+                            <p>Create Task</p>
+                        </button>
                     </div>
                 </div>
 
-                <main class="main-content">
-                    <div class="content-container">
-                        <!-- <div id="add-task" class="task">
-                            <label for="add-todo">Enter your task:</label>
-                            <div class="editor">
-                                <div class="description" contenteditable="true"></div>
+                <div class="separator content-separator">
+                    <hr>
+                </div>
+
+                <div class="tasks-functions">
+                    <button class="sort-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                            <path d="M130.4 268.2C135.4 280.2 147 288 160 288L480 288C492.9 288 504.6 280.2 509.6 268.2C514.6 256.2 511.8 242.5 502.7 233.3L342.7 73.3C330.2 60.8 309.9 60.8 297.4 73.3L137.4 233.3C128.2 242.5 125.5 256.2 130.5 268.2zM130.4 371.7C125.4 383.7 128.2 397.4 137.3 406.6L297.3 566.6C309.8 579.1 330.1 579.1 342.6 566.6L502.6 406.6C511.8 397.4 514.5 383.7 509.5 371.7C504.5 359.7 492.9 352 480 352L160 352C147.1 352 135.4 359.8 130.4 371.8z" />
+                        </svg>
+                        Sort By</button>
+                    <button class="filter-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                            <path fill="rgb(255, 255, 255)" d="M32 64C19.1 64 7.4 71.8 2.4 83.8S.2 109.5 9.4 118.6L192 301.3 192 416c0 8.5 3.4 16.6 9.4 22.6l64 64c9.2 9.2 22.9 11.9 34.9 6.9S320 492.9 320 480l0-178.7 182.6-182.6c9.2-9.2 11.9-22.9 6.9-34.9S492.9 64 480 64L32 64z" />
+                        </svg>
+                        Filter
+                    </button>
+                </div>
+
+                <div class="main-content">
+                    <div class="overlay" id="overlay">
+                        <div class="modal">
+                            <h2>Create new task</h2>
+                            <input type="text" id="modalInput" placeholder="Enter a title…" />
+                            <div class="modal-actions">
+                                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                                <button class="btn-create" onclick="handleCreate()">Create</button>
                             </div>
-                            <button class="add-button done-button" type="button" onclick="Tasks.add()">
-                                Add
-                            </button>
-                        </div> -->
-                        <div class="tasks">
-                            <div class="task">content 1</div>
-                            <div class="task">content 2</div>
-                            <div class="task">content 1</div>
-                            <div class="task">content 2</div>
-                            <div class="task">content 1</div>
-                            <div class="task">content 2</div>
-                            <div class="task">content 1</div>
-                            <div class="task">content 2</div>
                         </div>
                     </div>
-                </main>
+
+                    <div class="tasks">
+
+                        <div class="task">
+                            <div class="task-text">
+                                <h3>Task #1</h3>
+                            </div>
+                            <div class="links">
+                                <h4>Links:</h4>
+                                <a href="https://google.com">https://google.com</a>
+                                <a href="https://stackoverflow.com">https://stackoverflow.com</a>
+                                <a href="https://daily.dev">https://daily.dev</a>
+                            </div>
+                            <div class="tags">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                    <path fill="rgb(255, 255, 255)" d="M401.2 39.1L549.4 189.4c27.7 28.1 27.7 73.1 0 101.2L393 448.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L515.3 256.8c9.2-9.3 9.2-24.4 0-33.7L367 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM32.1 229.5L32.1 96c0-35.3 28.7-64 64-64l133.5 0c17 0 33.3 6.7 45.3 18.7l144 144c25 25 25 65.5 0 90.5L285.4 418.7c-25 25-65.5 25-90.5 0l-144-144c-12-12-18.7-28.3-18.7-45.3zm144-85.5a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+                                </svg>
+                                <span>cool</span>
+                                <span>wow</span>
+                                <span>such</span>
+                                <span>unique</span>
+                                <span>idontwanttodothistask</span>
+                            </div>
+                            <div class="task-btn-group">
+                                <button class="task-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM438 209.7C427.3 201.9 412.3 204.3 404.5 215L285.1 379.2L233 327.1C223.6 317.7 208.4 317.7 199.1 327.1C189.8 336.5 189.7 351.7 199.1 361L271.1 433C276.1 438 282.9 440.5 289.9 440C296.9 439.5 303.3 435.9 307.4 430.2L443.3 243.2C451.1 232.5 448.7 217.5 438 209.7z" />
+                                    </svg></button>
+                                <button class="task-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                    </svg></button>
+                                <button class="task-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
+                                    </svg></button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M288 64C252.7 64 224 92.7 224 128L224 384C224 419.3 252.7 448 288 448L480 448C515.3 448 544 419.3 544 384L544 183.4C544 166 536.9 149.3 524.3 137.2L466.6 81.8C454.7 70.4 438.8 64 422.3 64L288 64zM160 192C124.7 192 96 220.7 96 256L96 512C96 547.3 124.7 576 160 576L352 576C387.3 576 416 547.3 416 512L416 496L352 496L352 512L160 512L160 256L176 256L176 192L160 192z" />
+                                    </svg></button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path fill="rgb(255, 255, 255)" d="M401.2 39.1L549.4 189.4c27.7 28.1 27.7 73.1 0 101.2L393 448.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L515.3 256.8c9.2-9.3 9.2-24.4 0-33.7L367 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM32.1 229.5L32.1 96c0-35.3 28.7-64 64-64l133.5 0c17 0 33.3 6.7 45.3 18.7l144 144c25 25 25 65.5 0 90.5L285.4 418.7c-25 25-65.5 25-90.5 0l-144-144c-12-12-18.7-28.3-18.7-45.3zm144-85.5a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+                                    </svg>
+                                </button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M160 96C160 78.3 145.7 64 128 64C110.3 64 96 78.3 96 96L96 544C96 561.7 110.3 576 128 576C145.7 576 160 561.7 160 544L160 422.4L222.7 403.6C264.6 391 309.8 394.9 348.9 414.5C391.6 435.9 441.4 438.5 486.1 421.7L523.2 407.8C535.7 403.1 544 391.2 544 377.8L544 130.1C544 107.1 519.8 92.1 499.2 102.4L487.4 108.3C442.5 130.8 389.6 130.8 344.6 108.3C308.2 90.1 266.3 86.5 227.4 98.2L160 118.4L160 96z" />
+                                    </svg>
+                                </button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M224 64C241.7 64 256 78.3 256 96L256 128L384 128L384 96C384 78.3 398.3 64 416 64C433.7 64 448 78.3 448 96L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 96C192 78.3 206.3 64 224 64zM160 304L160 336C160 344.8 167.2 352 176 352L208 352C216.8 352 224 344.8 224 336L224 304C224 295.2 216.8 288 208 288L176 288C167.2 288 160 295.2 160 304zM288 304L288 336C288 344.8 295.2 352 304 352L336 352C344.8 352 352 344.8 352 336L352 304C352 295.2 344.8 288 336 288L304 288C295.2 288 288 295.2 288 304zM432 288C423.2 288 416 295.2 416 304L416 336C416 344.8 423.2 352 432 352L464 352C472.8 352 480 344.8 480 336L480 304C480 295.2 472.8 288 464 288L432 288zM160 432L160 464C160 472.8 167.2 480 176 480L208 480C216.8 480 224 472.8 224 464L224 432C224 423.2 216.8 416 208 416L176 416C167.2 416 160 423.2 160 432zM304 416C295.2 416 288 423.2 288 432L288 464C288 472.8 295.2 480 304 480L336 480C344.8 480 352 472.8 352 464L352 432C352 423.2 344.8 416 336 416L304 416zM416 432L416 464C416 472.8 423.2 480 432 480L464 480C472.8 480 480 472.8 480 464L480 432C480 423.2 472.8 416 464 416L432 416C423.2 416 416 423.2 416 432z" />
+                                    </svg>
+                                </button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M264.5 64C251.2 64 240.5 74.7 240.5 88C240.5 101.3 251.2 112 264.5 112L296.5 112L296.5 137.3C188.5 149.2 104.5 240.8 104.5 352C104.5 471.3 201.2 568 320.5 568C439.8 568 536.5 471.3 536.5 352C536.5 312.2 525.7 274.9 506.9 242.8L535.1 214.6C547.6 202.1 547.6 181.8 535.1 169.3C522.6 156.8 502.3 156.8 489.8 169.3L466.4 192.7C433.5 162.5 391.2 142.4 344.4 137.2L344.4 111.9L376.4 111.9C389.7 111.9 400.4 101.2 400.4 87.9C400.4 74.6 389.7 63.9 376.4 63.9L264.4 63.9zM344.5 248L344.5 352C344.5 365.3 333.8 376 320.5 376C307.2 376 296.5 365.3 296.5 352L296.5 248C296.5 234.7 307.2 224 320.5 224C333.8 224 344.5 234.7 344.5 248z" />
+                                    </svg>
+                                </button>
+                                <button class="task-btn">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM288 224C288 206.3 302.3 192 320 192C337.7 192 352 206.3 352 224C352 241.7 337.7 256 320 256C302.3 256 288 241.7 288 224zM280 288L328 288C341.3 288 352 298.7 352 312L352 400L360 400C373.3 400 384 410.7 384 424C384 437.3 373.3 448 360 448L280 448C266.7 448 256 437.3 256 424C256 410.7 266.7 400 280 400L304 400L304 336L280 336C266.7 336 256 325.3 256 312C256 298.7 266.7 288 280 288z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </main>
         </div>
     </body>
 
-    <script src="handle.js"></script>
-    <script src="eventhandler.js"></script>
+    <script src="createTask.js"></script>
 
 </html>

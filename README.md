@@ -39,12 +39,12 @@ or open the `public` directory using the live server extension in vscode.
 
 ## Todo
 
-- [x] display tasks sorted by createdAt
-- [x] Add new task
-- [x] Delete task
+- [ ] display tasks sorted by createdAt
+- [ ] Add new task
+- [ ] Delete task
 - [ ] Mark task as done -> Move to archive
 - [ ] Edit task
-- [x] make tasks persistent (e.g. through localStorage)
+- [ ] make tasks persistent (e.g. through localStorage)
 - [ ] store tasks in backend (e.g. sqlite)
 - [ ] add possibility to duplicate task
 - [ ] Task text formatting
@@ -63,9 +63,10 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] add task counter at bottom of page
 - [ ] make meta information visible
 - [ ] add CLI support
-- [ ] add searching and filtering tasks
+- [ ] searching tasks
+- [ ] filtering tasks
+- [ ] sorting for task lists and tasks
 - [ ] add archive for archived and/or finished or deleted tasks
 - [ ] add switch between simple and advanced mode
 - [ ] add REST API for managing tasks
-- [ ] sorting for task lists and tasks
 - [ ] Subtask
