@@ -66,6 +66,7 @@ or open the `public` directory using the live server extension in vscode.
 - [ ] searching tasks
 - [ ] filtering tasks
 - [ ] sorting for task lists and tasks
+- [x] make task lists draggable
 - [ ] add archive for archived and/or finished or deleted tasks
 - [ ] add switch between simple and advanced mode
 - [ ] add REST API for managing tasks
