@@ -189,6 +189,10 @@
             align-items: center;
         }
 
+        .task-list.active {
+            background: #6c63ff;
+        }
+
         .task-list-text {
             flex: 1;
             word-break: break-word;
@@ -441,7 +445,7 @@
                 </div>
 
                 <div class="task-lists" id="taskLists">
-                    <div class="sidebar-container sidebar-selectable task-list" draggable="true">
+                    <div class="sidebar-container sidebar-selectable task-list active" draggable="true">
                         <div class="task-list-text">Task List 1</div>
                         <div class="task-list-buttons">
                             <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -629,24 +633,18 @@
     </body>
 
     <script src="createTask.js"></script>
+    <script src="taskLists.js"></script>
+
     <script>
-        let dragged = null;
+        const lists = document.querySelectorAll('.task-list');
 
-        const taskLists = document.getElementById("taskLists");
-
-        taskLists.addEventListener('dragstart', e => {
-            dragged = e.target.closest('.task-list');
+        // Highlight selected task list
+        lists.forEach(item => {
+            item.addEventListener('click', () => {
+                lists.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
         });
-
-        taskLists.addEventListener('dragover', e => {
-            e.preventDefault();
-            const target = e.target.closest('.task-list');
-            if(!target || target === dragged) return;
-            const after = e.clientY > target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
-            taskLists.insertBefore(dragged, after ? target.nextSibling : target);
-        });
-
-        taskLists.addEventListener('dragend', () => { dragged = null; });
     </script>
 
 </html>
