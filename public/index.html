@@ -635,16 +635,4 @@
     <script src="createTask.js"></script>
     <script src="taskLists.js"></script>
 
-    <script>
-        const lists = document.querySelectorAll('.task-list');
-
-        // Highlight selected task list
-        lists.forEach(item => {
-            item.addEventListener('click', () => {
-                lists.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
-    </script>
-
 </html>

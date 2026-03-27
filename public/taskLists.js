@@ -1,12 +1,13 @@
 let dragged = null;
 
-const taskLists = document.getElementById("taskLists");
+const taskListsContainerContainer =
+  document.getElementById("taskListsContainer");
 
-taskLists.addEventListener("dragstart", (e) => {
+taskListsContainer.addEventListener("dragstart", (e) => {
   dragged = e.target.closest(".task-list");
 });
 
-taskLists.addEventListener("dragover", (e) => {
+taskListsContainer.addEventListener("dragover", (e) => {
   e.preventDefault();
   const target = e.target.closest(".task-list");
   if (!target || target === dragged) return;
@@ -14,9 +15,19 @@ taskLists.addEventListener("dragover", (e) => {
     e.clientY >
     target.getBoundingClientRect().top +
       target.getBoundingClientRect().height / 2;
-  taskLists.insertBefore(dragged, after ? target.nextSibling : target);
+  taskListsContainer.insertBefore(dragged, after ? target.nextSibling : target);
 });
 
-taskLists.addEventListener("dragend", () => {
+taskListsContainer.addEventListener("dragend", () => {
   dragged = null;
+});
+
+const taskListItems = document.querySelectorAll(".task-list");
+
+// Highlight selected task list
+taskListsContainer.forEach((item) => {
+  item.addEventListener("click", () => {
+    taskListsContainer.forEach((i) => i.classList.remove("active"));
+    item.classList.add("active");
+  });
 });
