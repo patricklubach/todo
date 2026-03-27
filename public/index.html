@@ -121,7 +121,8 @@
         }
 
         .sidebar-selectable:hover {
-            background-color: var(--bg-color-brighter1);
+            background-color: var(--bg);
+            cursor: pointer;
         }
 
         .profile {
@@ -265,7 +266,6 @@
         }
 
         .tasks-functions {
-            background-color: var(--main-content-bg-color);
             display: flex;
             flex-direction: row;
             gap: 14px;
@@ -276,7 +276,6 @@
             display: flex;
             flex-direction: column;
             row-gap: 1em;
-            background-color: var(--main-content-bg-color);
             /* align-items: center; */
         }
 
@@ -441,8 +440,8 @@
                     </button>
                 </div>
 
-                <div class="task-lists">
-                    <div class="sidebar-container sidebar-selectable task-list">
+                <div class="task-lists" id="taskLists">
+                    <div class="sidebar-container sidebar-selectable task-list" draggable="true">
                         <div class="task-list-text">Task List 1</div>
                         <div class="task-list-buttons">
                             <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -450,10 +449,11 @@
                                 </svg></button>
                             <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
                                     <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
-                                </svg></button>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="sidebar-container sidebar-selectable task-list">
+                    <div class="sidebar-container sidebar-selectable task-list" draggable="true">
                         <div class="task-list-text">Task List 2</div>
                         <div class="task-list-buttons">
                             <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -461,10 +461,11 @@
                                 </svg></button>
                             <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
                                     <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
-                                </svg></button>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="sidebar-container sidebar-selectable task-list">
+                    <div class="sidebar-container sidebar-selectable task-list" draggable="true">
                         <div class="task-list-text">Task List 3</div>
                         <div class="task-list-buttons">
                             <button class="edit-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -472,7 +473,8 @@
                                 </svg></button>
                             <button class="delete-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="icon"><!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
                                     <path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
-                                </svg></button>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -627,5 +629,24 @@
     </body>
 
     <script src="createTask.js"></script>
+    <script>
+        let dragged = null;
+
+        const taskLists = document.getElementById("taskLists");
+
+        taskLists.addEventListener('dragstart', e => {
+            dragged = e.target.closest('.task-list');
+        });
+
+        taskLists.addEventListener('dragover', e => {
+            e.preventDefault();
+            const target = e.target.closest('.task-list');
+            if(!target || target === dragged) return;
+            const after = e.clientY > target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
+            taskLists.insertBefore(dragged, after ? target.nextSibling : target);
+        });
+
+        taskLists.addEventListener('dragend', () => { dragged = null; });
+    </script>
 
 </html>

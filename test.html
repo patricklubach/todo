@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Test</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+  </head>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lists {
+      height: 200px;
+      width: 400px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-items: center;
+      align-items: center;
+
+      border: 2px solid #7f7f7f;
+    }
+
+    .item {
+      border: 2px solid #c87171;
+      width: 100%;
+      height: 1.5rem;
+      background-color: #c87171;
+      color: #fff;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <div id="list" class="lists">
+        <div class="item" draggable="true">Item 1</div>
+        <div class="item" draggable="true">Item 2</div>
+        <div class="item" draggable="true">Item 3</div>
+        <div class="item" draggable="true">Item 4</div>
+        <div class="item" draggable="true">Item 5</div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    let dragged = null;
+
+    list.addEventListener('dragstart', e => {
+      dragged = e.target.closest('.item');
+    });
+
+    list.addEventListener('dragover', e => {
+      e.preventDefault(); // prevents browser from executing default behavior
+      const target = e.target.closest('.item'); // gets the nearest object to the item being dragged
+      if(!target || target === dragged) return;
+      const after = e.clientY > target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
+      list.insertBefore(dragged, after ? target.nextSibling : target);
+    });
+
+    list.addEventListener('dragend', () => { dragged = null; });
+  </script>
+
+</html>
