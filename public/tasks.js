@@ -4,6 +4,8 @@ class Task {
     this.description = description;
     this.createdAt = new Date();
     this.updatedAt = new Date();
+    this.links = [];
+    this.tags = [];
     this.editMode = false;
     this.done = false;
     this.archived = false;
@@ -14,11 +16,13 @@ class Task {
     taskElement.id = this.id;
     taskElement.classList.add("task");
 
-    const descriptionElement = this.editMode ? document.createElement("input") : document.createElement("p");
+    const descriptionElement = this.editMode
+      ? document.createElement("input")
+      : document.createElement("p");
     descriptionElement.id = this.id;
     descriptionElement.innerHTML = this.description;
     if (this.done) {
-      descriptionElement.classList.add("done")
+      descriptionElement.classList.add("done");
     }
     taskElement.appendChild(descriptionElement);
 
@@ -66,7 +70,7 @@ class Task {
   }
 
   static toggle(id) {
-    const task = Tasks.load(id)
+    const task = Tasks.load(id);
 
     const taskElement = document.getElementById(id);
     const description = taskElement.querySelector("p");
@@ -85,25 +89,25 @@ class Tasks {
     const task = new Task(description);
     console.log(`Created task (id: ${task.id})`);
     task.save();
-    
+
     document.getElementById("description").innerHTML = "";
     this.display();
   }
-  
+
   static delete(id) {
     console.log(`Deleting task (id: ${id})`);
     localStorage.removeItem(id);
     console.log(`Task deleted sucessfully (id: ${id})`);
     this.display();
   }
-  
+
   static display(tasks = []) {
     console.log("Displaying tasks");
     const tasksElement = document.getElementById("tasks");
-    
+
     let newTasksElement = document.createElement("div");
     newTasksElement.id = "tasks";
-    
+
     let tasksList;
     if (0 < tasks.length) {
       tasksList = tasks;
@@ -111,15 +115,15 @@ class Tasks {
       tasksList = this.loadAll();
     }
     tasksList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
+
     for (let task of tasksList) {
       let taskElement = task.getHTMLElement();
       newTasksElement.appendChild(taskElement);
     }
-    
+
     tasksElement.replaceWith(newTasksElement);
   }
-  
+
   static edit(id) {
     console.log(`Editing task "${id}"`);
     const task = Tasks.load(id);
@@ -127,7 +131,7 @@ class Tasks {
     task.save();
     Tasks.display();
   }
-  
+
   static load(id) {
     const data = JSON.parse(localStorage.getItem(id));
     const task = Object.assign(new Task(), data);
@@ -135,7 +139,7 @@ class Tasks {
   }
 
   static loadAll() {
-    console.log("Loading all tasks")
+    console.log("Loading all tasks");
     const tasksList = [];
     for (let i = 0; i < localStorage.length; i++) {
       let id = localStorage.key(i);
@@ -160,19 +164,59 @@ class Tasks {
   }
 }
 
-function init() {
-  console.log("Initializing app");
-  localStorage.clear();
-  const search = document.getElementById("search");
-  search.value = "";
-  console.log("Adding tasks");
-  const tasks = ["foo", "bar", "baz", "foobar"] //"lol", "lul", "lel", "lal", "bingo", "bongo", "bengo", "bango"];
+// function init() {
+//   console.log("Initializing app");
+//   localStorage.clear();
+//   const search = document.getElementById("search");
+//   search.value = "";
+//   console.log("Adding tasks");
+//   const tasks = ["foo", "bar", "baz", "foobar"]; //"lol", "lul", "lel", "lal", "bingo", "bongo", "bengo", "bango"];
 
-  for (let i = 0; i < tasks.length; i++) {
-    Tasks.create(tasks[i]);
-  }
-  console.log("Tasks added");
-  console.log("App initialized sucessfully");
+//   for (let i = 0; i < tasks.length; i++) {
+//     Tasks.create(tasks[i]);
+//   }
+//   console.log("Tasks added");
+//   console.log("App initialized sucessfully");
+// }
+
+const overlay = document.getElementById("overlay");
+const input = document.getElementById("modalInput");
+
+function openModal() {
+  overlay.classList.add("active");
+  input.focus();
+}
+function closeModal() {
+  overlay.classList.remove("active");
+  input.value = "";
 }
 
-init();
+function handleCreate() {
+  const value = input.value.trim();
+  if (!value) {
+    input.focus();
+    return;
+  }
+  alert(`Created: "${value}"`);
+  closeModal();
+}
+
+// Close on overlay click
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) closeModal();
+});
+
+// Close on Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+
+// Open overlay
+document.addEventListener("keydown", (e) => {
+  if (e.key === "." && !overlay.classList.contains("active")) {
+    e.preventDefault();
+    openModal();
+  }
+});
+
+// init();
