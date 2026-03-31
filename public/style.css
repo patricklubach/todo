@@ -67,7 +67,6 @@ button {
     align-items: center;
     cursor: pointer;
     outline: none;
-    /* border: 1px solid var(--border); */
     border: none;
     font-size: 1rem;
     border-radius: var(--element-radius);
@@ -97,11 +96,11 @@ a {
     flex-direction: column;
     row-gap: 0.5em;
     background-color: var(--bg-dark);
+    padding: 0 10px 0 10px;
 }
 
 .sidebar-container {
-    height: 2em;
-    padding: 0 10px 0 10px;
+    height: 2rem;
     display: flex;
     align-items: center;
 }
@@ -159,7 +158,6 @@ a {
 }
 
 .task-lists {
-    background-color: var(--task-list-bg-color);
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -173,11 +171,20 @@ a {
 }
 
 .task-list {
-    height: 2em;
+    height: 2rem;
     position: relative;
     flex-direction: row;
     align-items: center;
-    /* padding: 0.5em 0 0.5em 0; */
+}
+
+.task-list input {
+    height: 2rem;
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    color: var(--text);
+    font-size: 1rem;
 }
 
 .task-list.active {

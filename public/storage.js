@@ -26,6 +26,12 @@ data = {
 
 class Storage {
   static saveTaskList(taskList) {
+    if (!taskList.id) {
+      throw new Error("Task list must have an id");
+    }
+    if (!taskList.name) {
+      throw new Error("Task list must have a name");
+    }
     console.log(`Saving task list "${taskList.name}" with id "${taskList.id}"`);
     localStorage.setItem(taskList.id, JSON.stringify(taskList));
   }
